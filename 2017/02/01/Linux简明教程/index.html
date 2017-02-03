@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Linux," />
+  <meta name="keywords" content="Linux,vim," />
 
 
 
@@ -84,25 +84,16 @@
 
 
 
-<meta name="description" content="GitHub Pages免费提供300M不限流量的空间，提供给全球用户搭建公共静态页面托管服务。我看到网上不少人担忧这样好的服务如果被国人滥用，可能会导致GitHub Pages封锁国内账号，从而带来更大的不便。希望大家一起严于律己，更好的利用这个资源，让更多的技术人因此受益。
-这篇文章记录了利用GitHub Pages搭建个人博客的所有过程。文章分为三个部分：快速开始、变得更好和其他补充。快速开">
+<meta name="description" content="最近工作中一些几乎没有Linux基础的同学在开发过程中遇到一些问题，所以我花了两天时间整理了这些基础知识供其查找，以满足日常工作需要。文章分为四个部分：Linux目录结构、常用软件安装方法、vim基本使用，并在最后整理了30条左右的常用指令。因为定位是简明教程，所以不会涉及过多原理以及对每条指令展开阐述。该文章均是以64位CentOS 7.1为例，其他发行版也基本类似。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux 简明教程">
 <meta property="og:url" content="http://yoursite.com/2017/02/01/Linux简明教程/index.html">
 <meta property="og:site_name" content="点滴记录">
-<meta property="og:description" content="GitHub Pages免费提供300M不限流量的空间，提供给全球用户搭建公共静态页面托管服务。我看到网上不少人担忧这样好的服务如果被国人滥用，可能会导致GitHub Pages封锁国内账号，从而带来更大的不便。希望大家一起严于律己，更好的利用这个资源，让更多的技术人因此受益。
-这篇文章记录了利用GitHub Pages搭建个人博客的所有过程。文章分为三个部分：快速开始、变得更好和其他补充。快速开">
-<meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/githubpages_create_repo.png?imageView2/2/w/500/h/335">
-<meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/domain_create.png?imageView2/2/w/500/h/335">
-<meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/add_ssh_key.png?imageView2/2/w/500/h/335">
-<meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/understand_domain.png">
-<meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/qiniu_picture_prefix.png?imageView2/2/w/500/h/335">
-<meta property="og:updated_time" content="2017-02-03T04:59:03.049Z">
+<meta property="og:description" content="最近工作中一些几乎没有Linux基础的同学在开发过程中遇到一些问题，所以我花了两天时间整理了这些基础知识供其查找，以满足日常工作需要。文章分为四个部分：Linux目录结构、常用软件安装方法、vim基本使用，并在最后整理了30条左右的常用指令。因为定位是简明教程，所以不会涉及过多原理以及对每条指令展开阐述。该文章均是以64位CentOS 7.1为例，其他发行版也基本类似。">
+<meta property="og:updated_time" content="2017-02-03T13:16:39.234Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux 简明教程">
-<meta name="twitter:description" content="GitHub Pages免费提供300M不限流量的空间，提供给全球用户搭建公共静态页面托管服务。我看到网上不少人担忧这样好的服务如果被国人滥用，可能会导致GitHub Pages封锁国内账号，从而带来更大的不便。希望大家一起严于律己，更好的利用这个资源，让更多的技术人因此受益。
-这篇文章记录了利用GitHub Pages搭建个人博客的所有过程。文章分为三个部分：快速开始、变得更好和其他补充。快速开">
-<meta name="twitter:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/githubpages_create_repo.png?imageView2/2/w/500/h/335">
+<meta name="twitter:description" content="最近工作中一些几乎没有Linux基础的同学在开发过程中遇到一些问题，所以我花了两天时间整理了这些基础知识供其查找，以满足日常工作需要。文章分为四个部分：Linux目录结构、常用软件安装方法、vim基本使用，并在最后整理了30条左右的常用指令。因为定位是简明教程，所以不会涉及过多原理以及对每条指令展开阐述。该文章均是以64位CentOS 7.1为例，其他发行版也基本类似。">
 
 
 
@@ -366,23 +357,52 @@
       
 
       
-        <p>GitHub Pages免费提供300M不限流量的空间，提供给全球用户搭建<strong>公共静态页面</strong>托管服务。我看到网上不少人担忧这样好的服务如果被国人滥用，可能会导致GitHub Pages封锁国内账号，从而带来更大的不便。希望大家一起严于律己，更好的利用这个资源，让更多的技术人因此受益。</p>
-<p>这篇文章记录了利用GitHub Pages搭建个人博客的所有过程。<strong>文章分为三个部分：快速开始、变得更好和其他补充。</strong>快速开始部分，我将仅通过Git工具和一个最简单的index.html文件快速搭建一个demo，让大家尽快了解GitHub Pages搭建个人博客的思路和原理；变得更好部分将借助基于Node.js的Hexo博客框架更加方便和美观书写博文；最后在其他补充部分将介绍搭建过程中遇到的一些问题，比如如何绑定域名、搭建图床等。<br><a id="more"></a></p>
-<p>我希望您已经有Git和Node的一些基础。如果没有，也没有关系，遇到了不是很理解可以先试着跟着操作，后面再去学习。</p>
-<h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><p><strong>1. 在GitHub上新建仓库</strong></p>
-<p>在GitHub上新建一个仓库，并取名为your_username.github.io其中your_username是您自己的账号名，比如这边的love-coder（由于之前已经创建，所有报已存在错误）。</p>
-<img title="新建仓库" alt="新建仓库" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/githubpages_create_repo.png?imageView2/2/w/500/h/335">
-<p><strong>2. 在本地写博客</strong></p>
-<p>本地新建一个index.html文件,并输入以下内容。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>你好，这是我的第一篇博客 <span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
-<p><strong>3. 用Git把index.html提交到GitHub上</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># git init</span></div><div class="line"><span class="comment"># git add index.html</span></div><div class="line"><span class="comment"># git commit -m "我的第一篇博客"</span></div><div class="line"><span class="comment"># git remote add origin https://github.com/love-coder/love-coder.github.io.git</span></div><div class="line"><span class="comment"># git push -u origin master</span></div></pre></td></tr></table></figure>
-<p>在浏览器中输入<strong>love-coder.github.io</strong>即可以访问。</p>
-<p><strong>本质：</strong>在GitHub中创建的love-coder.github.io仓库中master分支中的静态文件可以被直接访问。理论上，依据这种方法我们就可以开始构建自己的博客了，但是我们只是想写文章，而这种原始的方式除此之外还需要写HTML、CSS甚至JS文件，显然太过繁琐。因此出现了很多框架，让我们专注于博客本身即写文章，而无需去考虑怎么生成静态文件。Hexo就是这样一款基于Node.js的框架。</p>
-<h2 id="测试图片"><a href="#测试图片" class="headerlink" title="测试图片"></a>测试图片</h2><img title="域名创建" alt="域名创建" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/domain_create.png?imageView2/2/w/500/h/335">
-<hr>
-<h2 id=""><a href="#" class="headerlink" title=""></a><img title="添加SSH" alt="添加SSH" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/add_ssh_key.png?imageView2/2/w/500/h/335"></h2><h2 id="-1"><a href="#-1" class="headerlink" title=""></a><img title="域名绑定" alt="域名绑定" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/understand_domain.png"></h2><img title="七牛外链地址" alt="七牛外链地址" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/qiniu_picture_prefix.png?imageView2/2/w/500/h/335">
-<h2 id="变得更好"><a href="#变得更好" class="headerlink" title="变得更好"></a>变得更好</h2><h2 id="其他补充"><a href="#其他补充" class="headerlink" title="其他补充"></a>其他补充</h2>
+        <p>最近工作中一些几乎没有Linux基础的同学在开发过程中遇到一些问题，所以我花了两天时间整理了这些基础知识供其查找，以满足日常工作需要。<strong>文章分为四个部分：Linux目录结构、常用软件安装方法、vim基本使用，并在最后整理了30条左右的常用指令。</strong>因为定位是简明教程，所以不会涉及过多原理以及对每条指令展开阐述。该文章均是以<strong>64位CentOS 7.1</strong>为例，其他发行版也基本类似。</p>
+<a id="more"></a>
+<h2 id="Linux目录结构"><a href="#Linux目录结构" class="headerlink" title="Linux目录结构"></a><font color="#fc6423">Linux目录结构</font></h2><p>Linux系统中所有资源均是以文件的方式被表示。常见的有：普通文件、目录文件、字符设备文件和块设备文件、符号链接文件等。一般认为Linux是没有扩展名的概念，也就是说一个文件能不能被执行跟其扩张名没有一点关系，和在Windows平台下的.exe、.bat等不同。只要用户账户具备x即执行权限，就可以执行该文件，当然能不能执行成功就得看具体内容。但是，为了能够更好地理解Linux，开源社区任然建议遵循约定俗成的一些规范，比如<em>.sh是脚本或批量处理文件，</em>.tar.gz、<em>.zip、</em>.tar等是压缩文件，.html是网页文件等等。同样，被约定俗成的还有它的目录结构，它的各部分含义如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">├── bin  放置可执行文件，root和一般用户都可以使用，比如mv、cat、tail等</div><div class="line">├── boot  放置开机使用的文件，包括内核、开机菜单和一些配置文件</div><div class="line">├── dev  放置一些设备文件，访问某个文件就等于访问某个设备</div><div class="line">├── etc  放置系统主要配置文件，一般只有root有权限修改，比如账号密码文件</div><div class="line">├── home  放置创建一般用户后的一些规范以及用户自己的各类文件</div><div class="line">├── lib  放置放置开机时以及/sbin和/bin用的函数库</div><div class="line">├── media  放置可删除设备文件</div><div class="line">├── mnt  放置暂时挂载设备的文件</div><div class="line">├── opt 放置三方软件相关文件，现一般放置到/usr/<span class="built_in">local</span>中</div><div class="line">├── proc  虚拟文件系统，它放置的数据都在内存中，比如内核、进程等</div><div class="line">├── root  系统管理员的主文件夹</div><div class="line">├── run  放置系统运行时需要的一些文件</div><div class="line">├── sbin 放置开机锁需要的指令文件，比如开机、修复等</div><div class="line">├── srv  放置一些网络服务所需要的数据文件</div><div class="line">├── sys  放置虚拟文件系统文件，类似 /proc</div><div class="line">├── tmp  放置一般用户暂时存放文件</div><div class="line">├── usr UNIX Software Resource</div><div class="line">|   ├── bin  放置绝大数用户使用的软件</div><div class="line">|   └── sbin  放置非系统正常使用时的一些命令</div><div class="line">|   ├── lib  放置应用软件的函数库、目标文件等</div><div class="line">|   ├── <span class="built_in">local</span>  放置自行安装的软件</div><div class="line">|   └── share  放置共享文件</div><div class="line">|   ├── src  放置非内核源码文件， </div><div class="line">├── var  放置常态性变动的文件，比如缓存、登录文件等</div><div class="line">|   ├── cache  放置应用程序运行过程中的暂存文件</div><div class="line">|   └── lib  放置程序执行过程中的数据文件，比如/var/lib/mysql/</div><div class="line">|   ├── lock 放置设备上锁文件，比如多用户共用某设备，为了避免错乱，对设备上锁</div><div class="line">|   └── <span class="built_in">log</span>  放置登录信息文件</div></pre></td></tr></table></figure>
+<p>root:#################################</p>
+<h2 id="常用软件安装方法"><a href="#常用软件安装方法" class="headerlink" title="常用软件安装方法"></a><font color="#fc6423">常用软件安装方法</font></h2><p><strong>以安装Git为例</strong></p>
+<p><strong>1.安装编译git时需要的包，rpm方式</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># yum install curl-devel expat-devel gettext-devel openssl-devel zlib-devel</span></div><div class="line"><span class="comment"># yum install  gcc perl-ExtUtils-MakeMaker</span></div></pre></td></tr></table></figure>
+<p><strong>2.若已安装，则删除已有旧版本</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># yum remove git</span></div></pre></td></tr></table></figure>
+<p><strong>3.下载git源码并解压缩 </strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># cd /usr/src &amp;&amp; wget https://www.kernel.org/pub/software/scm/git/git-2.0.5.tar.gz</span></div><div class="line"><span class="comment"># tar -zxvf git-2.0.5.tar.gz -C /usr/local/</span></div></pre></td></tr></table></figure>
+<p><strong>4.编译安装，源码编译安装</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># cd usr/local/git-2.0.5</span></div><div class="line"><span class="comment"># ./configure </span></div><div class="line"><span class="comment"># make </span></div><div class="line"><span class="comment"># make install</span></div></pre></td></tr></table></figure>
+<p>最后，查看git版本看是否安装成功git –version。默认安装会把git添加至环境变量中，可以用echo $PATH检查是否在。如果不在，则需要添加至path中，这样便可以在系统任何目录下直接使用git指令。</p>
+<p>修改环境变量。在profile文件后加上路径信息，保存并退出。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># vim /etc/profile </span></div><div class="line"><span class="comment"># export GIT_HOME=/usr/local/ git-2.0.5</span></div><div class="line"><span class="comment"># export PATH=$ GIT_HOME /bin:$PATH</span></div></pre></td></tr></table></figure>
+<p>除了rpm方式和源码包编译安装方式外，还有一种常见的<strong>绿色安装</strong>，即解压缩文件后，直接就可以使用。有时为了方便，我们也将其命令添加到path中。</p>
+<h2 id="vim基本使用"><a href="#vim基本使用" class="headerlink" title="vim基本使用"></a><font color="#fc6423">vim基本使用</font></h2><p>vim通过i和Esc键在Insert和Normal模式下切换。在Insert模式下可以完成插入功能，而在Normal模式下可以实现快速移动、复制、粘贴、查找等操作。下面列出了一些常见的操作：</p>
+<p><strong>移动：</strong></p>
+<p>简单移动，可以通过上下左右键完成，但这种方式效率较低，一般还需配合下面这几种方式。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">w – 到下一个单词头</div><div class="line">$ -- 到本行尾</div><div class="line">gg – 到第一行</div><div class="line">G – 到最后一行</div><div class="line">*和<span class="comment"># – 移到下一个或上一个匹配单词上，要求此时光标在单词上</span></div><div class="line">:n – 若vim打开多个文件，则切换下一个文件</div></pre></td></tr></table></figure>
+<p><strong>选中和删除：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">d – 删除</div><div class="line">dd – 删除当前行并保存在剪切板中</div><div class="line">u – 撤销</div><div class="line">Ctri+r – 反撤销</div><div class="line">v – 可视化选中，类似鼠标选中一大段</div></pre></td></tr></table></figure>
+<p><strong>复制和粘贴：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ye – 光标处开始复制到当前单词末尾，不包括空格</div><div class="line">yw -光标处开始复制到当前单词末尾，包括空格</div><div class="line">y5l – 当前光标开始复制5个字符</div><div class="line">yy – 复制当前行</div><div class="line">p – 在光标后粘贴剪切板</div></pre></td></tr></table></figure>
+<p><strong>查找：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/正则表达式 – 查找满足要求的字串，并加亮提示</div></pre></td></tr></table></figure>
+<p><strong>保存和退出：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">:wq – 存盘和退出（:w 存盘，:q退出）</div><div class="line">:q! – 强制退出</div><div class="line">:saveas &lt;path&gt; -- 另存为</div></pre></td></tr></table></figure>
+<h2 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a><font color="#fc6423">常用指令</font></h2><p>下面列出的均是常用的指令，在熟悉一段时间后，一方面是能记得这些指令，更重要的是熟练使用help指令自查。</p>
+<p><strong>cd – Change Directory</strong></p>
+<p>格式：cd [目录名] </p>
+<p>功能：切换当前工作目录，比如进入根目录cd /，进入当前工作目录的上一级目录cd ..。</p>
+<p>举例：pwd指令为列出当前具体工作目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># pwd</span></div><div class="line">/home</div><div class="line"><span class="comment"># cd /</span></div><div class="line"><span class="comment"># pwd</span></div><div class="line">/</div><div class="line"><span class="comment"># cd /home/repo</span></div><div class="line"><span class="comment"># pwd</span></div><div class="line">/home/repo</div></pre></td></tr></table></figure>
+<p><strong>ls – List</strong></p>
+<p>格式：ls[选项] [目录名]</p>
+<p>功能：列出目标目录的子文件或目录</p>
+<p>常用参数：</p>
+<blockquote>
+<p>-a或-all 列出所有文件，包括.开头的隐藏文件<br>-r或-reverse 反向列举<br>-R或-recursive 同事递归列出所有子目录<br>-l 列出文件的详细详细(ls - l 等同于ll ) </p>
+</blockquote>
+<p>举例:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ls</span></div><div class="line">dir  hello.java</div><div class="line"><span class="comment"># ls -R</span></div><div class="line">.:</div><div class="line">dir  hello.java</div><div class="line">./dir:</div><div class="line">file1.txt</div><div class="line"><span class="comment"># ls ./dir</span></div><div class="line">file1.txt</div><div class="line"><span class="comment"># ls -l</span></div><div class="line">total 4</div><div class="line">drwxr-xr-x. 2 root root 22 Feb  1 13:20 dir</div><div class="line">-rw-r--r--. 1 root root 13 Feb  1 13:18 hello.java</div></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -406,6 +426,8 @@
         <div class="post-tags">
           
             <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/vim/" rel="tag"># vim</a>
           
         </div>
       
@@ -510,7 +532,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -545,7 +567,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#快速开始"><span class="nav-number">1.</span> <span class="nav-text">快速开始</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试图片"><span class="nav-number">2.</span> <span class="nav-text">测试图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">3.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#-1"><span class="nav-number">4.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变得更好"><span class="nav-number">5.</span> <span class="nav-text">变得更好</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他补充"><span class="nav-number">6.</span> <span class="nav-text">其他补充</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux目录结构"><span class="nav-number">1.</span> <span class="nav-text">Linux目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用软件安装方法"><span class="nav-number">2.</span> <span class="nav-text">常用软件安装方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vim基本使用"><span class="nav-number">3.</span> <span class="nav-text">vim基本使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用指令"><span class="nav-number">4.</span> <span class="nav-text">常用指令</span></a></li></ol></div>
             
 
           </div>
