@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/02/01/Linux简明教程/index.html">
 <meta property="og:site_name" content="点滴记录">
 <meta property="og:description" content="最近工作中一些几乎没有Linux基础的同学在开发过程中遇到一些问题，所以我花了两天时间整理了这些基础知识供其查找，以满足日常工作需要。文章分为四个部分：Linux目录结构、常用软件安装方法、vim基本使用，并在最后整理了30条左右的常用指令。因为定位是简明教程，所以不会涉及过多原理以及对每条指令展开阐述。该文章均是以64位CentOS 7.1为例，其他发行版也基本类似。">
-<meta property="og:updated_time" content="2017-02-03T13:16:39.234Z">
+<meta property="og:updated_time" content="2017-02-03T14:09:16.561Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux 简明教程">
 <meta name="twitter:description" content="最近工作中一些几乎没有Linux基础的同学在开发过程中遇到一些问题，所以我花了两天时间整理了这些基础知识供其查找，以满足日常工作需要。文章分为四个部分：Linux目录结构、常用软件安装方法、vim基本使用，并在最后整理了30条左右的常用指令。因为定位是简明教程，所以不会涉及过多原理以及对每条指令展开阐述。该文章均是以64位CentOS 7.1为例，其他发行版也基本类似。">
@@ -388,20 +388,192 @@
 <p><strong>保存和退出：</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">:wq – 存盘和退出（:w 存盘，:q退出）</div><div class="line">:q! – 强制退出</div><div class="line">:saveas &lt;path&gt; -- 另存为</div></pre></td></tr></table></figure>
 <h2 id="常用指令"><a href="#常用指令" class="headerlink" title="常用指令"></a><font color="#fc6423">常用指令</font></h2><p>下面列出的均是常用的指令，在熟悉一段时间后，一方面是能记得这些指令，更重要的是熟练使用help指令自查。</p>
-<p><strong>cd – Change Directory</strong></p>
-<p>格式：cd [目录名] </p>
-<p>功能：切换当前工作目录，比如进入根目录cd /，进入当前工作目录的上一级目录cd ..。</p>
-<p>举例：pwd指令为列出当前具体工作目录</p>
+<p><strong><font color="#40a800">cd – Change Directory</font></strong></p>
+<p><strong>格式：</strong>cd [目录名] </p>
+<p><strong>功能：</strong>切换当前工作目录，比如进入根目录cd /，进入当前工作目录的上一级目录cd ..。</p>
+<p><strong>举例：</strong>pwd指令为列出当前具体工作目录</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># pwd</span></div><div class="line">/home</div><div class="line"><span class="comment"># cd /</span></div><div class="line"><span class="comment"># pwd</span></div><div class="line">/</div><div class="line"><span class="comment"># cd /home/repo</span></div><div class="line"><span class="comment"># pwd</span></div><div class="line">/home/repo</div></pre></td></tr></table></figure>
-<p><strong>ls – List</strong></p>
-<p>格式：ls[选项] [目录名]</p>
-<p>功能：列出目标目录的子文件或目录</p>
+<p><strong><font color="#40a800">ls – List</font></strong></p>
+<p><strong>格式：</strong>ls[选项] [目录名]</p>
+<p><strong>功能：</strong>列出目标目录的子文件或目录</p>
 <p>常用参数：</p>
 <blockquote>
 <p>-a或-all 列出所有文件，包括.开头的隐藏文件<br>-r或-reverse 反向列举<br>-R或-recursive 同事递归列出所有子目录<br>-l 列出文件的详细详细(ls - l 等同于ll ) </p>
 </blockquote>
-<p>举例:</p>
+<p><strong>举例:</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ls</span></div><div class="line">dir  hello.java</div><div class="line"><span class="comment"># ls -R</span></div><div class="line">.:</div><div class="line">dir  hello.java</div><div class="line">./dir:</div><div class="line">file1.txt</div><div class="line"><span class="comment"># ls ./dir</span></div><div class="line">file1.txt</div><div class="line"><span class="comment"># ls -l</span></div><div class="line">total 4</div><div class="line">drwxr-xr-x. 2 root root 22 Feb  1 13:20 dir</div><div class="line">-rw-r--r--. 1 root root 13 Feb  1 13:18 hello.java</div></pre></td></tr></table></figure>
+<p><strong><font color="#40a800">mkdir – Make Directort</font></strong></p>
+<p><strong>格式：</strong>mkdir [选项] [目录名]</p>
+<p><strong>功能：</strong>新建一个目录或文件夹 </p>
+<p><strong>常用参数：</strong></p>
+<blockquote>
+<p>-m 设定权限</p>
+</blockquote>
+<p><strong>举例:</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ll</span></div><div class="line">total 4</div><div class="line">drwxr-xr-x. 2 root root 22 Feb  1 13:20 dir</div><div class="line">-rw-r--r--. 1 root root 13 Feb  1 13:18 hello.java</div><div class="line"><span class="comment"># mkdir -m 777 dir2</span></div><div class="line"><span class="comment"># ll</span></div><div class="line">total 4</div><div class="line">drwxr-xr-x. 2 root root 22 Feb  1 13:20 dir</div><div class="line">drwxrwxrwx. 2 root root  6 Feb  1 15:54 dir2</div><div class="line">-rw-r--r--. 1 root root 13 Feb  1 13:18 hello.java</div></pre></td></tr></table></figure>
+<p><strong><font color="#40a800">cp – Copy</font></strong></p>
+<p><strong>格式：</strong>cp [源文件或文件夹] [目的文件或文件夹]</p>
+<p><strong>功能：</strong>对文件或文件夹进行复制 </p>
+<p><strong>常用参数：</strong></p>
+<blockquote>
+<p>-i 覆盖前询问<br>-r 递归复制文件夹中所有项目</p>
+</blockquote>
+<p>举例:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ll</span></div><div class="line">total 4</div><div class="line">drwxr-xr-x. 2 root root 22 Feb  1 13:20 dir1</div><div class="line">drwxrwxrwx. 2 root root  6 Feb  1 16:02 dir2</div><div class="line">-rw-r--r--. 1 root root 13 Feb  1 13:18 hello.java</div><div class="line"><span class="comment"># ls</span></div><div class="line">dir1  dir2  hello.java</div><div class="line"><span class="comment"># cp hello.java dir1/hello1.java</span></div><div class="line"><span class="comment"># ls dir1</span></div><div class="line">file1.txt  hello1.java</div><div class="line"><span class="comment"># cp -r dir1 dir3</span></div><div class="line"><span class="comment"># ls dir3</span></div><div class="line">file1.txt  hello1.java</div></pre></td></tr></table></figure>
+<p><strong><font color="#40a800">mv – Move</font></strong></p>
+<p><strong>格式：</strong>mv [源文件或文件夹] [目的文件或文件夹]</p>
+<p><strong>功能：</strong>对文件或文件夹进行移动或者重命名 </p>
+<p><strong>常用参数：</strong></p>
+<blockquote>
+<p>-i 覆盖前询问<br>-f 强制覆盖</p>
+</blockquote>
+<p><strong>举例:</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ls</span></div><div class="line">dir1  dir2  dir3  world.java</div><div class="line"><span class="comment"># mv world.java hello.java</span></div><div class="line"><span class="comment"># ls</span></div><div class="line">dir1  dir2  dir3  hello.java</div><div class="line"><span class="comment"># ls dir2</span></div><div class="line"><span class="comment"># mv hello.java dir2</span></div><div class="line"><span class="comment"># ls dir2</span></div><div class="line">hello.java</div></pre></td></tr></table></figure>
+<p><strong><font color="#40a800">cat – Concatenate and Print Files</font></strong></p>
+<p><strong>格式：</strong>cat [选项] [文件]</p>
+<p><strong>功能：</strong>标准输出、对文件合并 </p>
+<p><strong>常用参数：</strong></p>
+<blockquote>
+<p>-n 对输出行编号</p>
+</blockquote>
+<p><strong>举例:</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ls</span></div><div class="line">hello1.java  hello2.java  hello.java</div><div class="line"><span class="comment"># cat hello.java</span></div><div class="line"><span class="comment"># cat hello1.java </span></div><div class="line">hello1  </div><div class="line">hello1  </div><div class="line">hello1  </div><div class="line"><span class="comment"># cat -n hello2.java </span></div><div class="line">     1	hello2 </div><div class="line">     2	hello2 </div><div class="line">     3	hello2 </div><div class="line"><span class="comment"># cat hello1.java hello2.java &gt; hello.java </span></div><div class="line"><span class="comment"># cat hello.java </span></div><div class="line">hello1  </div><div class="line">hello1  </div><div class="line">hello1  </div><div class="line">hello2 </div><div class="line">hello2 </div><div class="line">hello2</div><div class="line">``` </div><div class="line"></div><div class="line">**&lt;font color=<span class="string">"#40a800"</span>&gt;tail – Print Tail(from Last)&lt;/font&gt;**</div><div class="line"></div><div class="line">**格式：**tail [选项] [文件]</div><div class="line"></div><div class="line">**功能：**指定位置输出文件、实时刷新输出日志(常见于线上跟踪日志) </div><div class="line"></div><div class="line">**常用参数：**</div><div class="line">&gt;<span class="_">-f</span> 循环输出</div><div class="line">&gt;-n 指定位置输入(-n 2 最后2行，-n +2第2行开始到最后)</div><div class="line"></div><div class="line">**举例:**</div><div class="line"></div><div class="line">``` bash</div><div class="line"><span class="comment"># cat test.log </span></div><div class="line">PING www.a.shifen.com (220.181.111.188) 56(84) bytes of data.</div><div class="line">64 bytes from 220.181.111.188: icmp_seq=1 ttl=128 time=21.6 ms</div><div class="line">64 bytes from 220.181.111.188: icmp_seq=2 ttl=128 time=22.0 ms</div><div class="line">64 bytes from 220.181.111.188: icmp_seq=3 ttl=128 time=22.7 ms</div><div class="line">64 bytes from 220.181.111.188: icmp_seq=4 ttl=128 time=23.3 ms</div><div class="line">64 bytes from 220.181.111.188: icmp_seq=5 ttl=128 time=25.0 ms</div><div class="line">64 bytes from 220.181.111.188: icmp_seq=6 ttl=128 time=22.2 ms</div><div class="line">64 bytes from 220.181.111.188: icmp_seq=7 ttl=128 time=24.2 ms</div><div class="line"></div><div class="line">--- www.a.shifen.com ping statistics ---</div><div class="line">7 packets transmitted, 7 received, 0% packet loss, time 6013ms</div><div class="line">rtt min/avg/max/mdev = 21.617/23.030/25.003/1.142 ms</div><div class="line"><span class="comment"># tail -n 2 test.log </span></div><div class="line">7 packets transmitted, 7 received, 0% packet loss, time 6013ms</div><div class="line">rtt min/avg/max/mdev = 21.617/23.030/25.003/1.142 ms</div></pre></td></tr></table></figure>
+<p><strong><font color="#40a800">rm – Remove</font></strong></p>
+<p><strong>格式：</strong>rm [选项] [文件或文件夹]</p>
+<p><strong>功能：</strong>危险操作，操作前务必确认。删除一个或多个文件或目录 </p>
+<p><strong>常用参数：</strong></p>
+<blockquote>
+<p>-r 递归删除给定参数中的全部文件包括子目录中<br>-f 不给出提示，直接删除<br>-i  交互删除，需要每次确认(一般情况下，建议带上)<br>-v、–verbose 显示删除的过程</p>
+<p><strong>举例:</strong></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ls</span></div><div class="line">dir1  dir2  dir3  test.log</div><div class="line"><span class="comment"># rm -ir dir3</span></div><div class="line">rm: descend into directory ‘dir3’? y</div><div class="line">rm: remove regular file ‘dir3/file1.txt’? y</div><div class="line">rm: remove regular file ‘dir3/hello1.java’? y</div><div class="line">rm: remove directory ‘dir3’? y</div><div class="line"><span class="comment"># ls</span></div><div class="line">dir1  dir2  test.log</div></pre></td></tr></table></figure>
+<p><strong><font color="#40a800">grep – Global Regular Expression Print</font></strong></p>
+<p><strong>格式：</strong>grep [文件] [参数] </p>
+<p><strong>功能：</strong>grep指令配合正则表达式非常强大，它用来在文件中匹配文本，有时也用来配合其他指令使用，在结果中二次筛选。</p>
+<p><strong>常用参数：</strong> </p>
+<blockquote>
+<p>-i 忽略大小写区别</p>
+</blockquote>
+<p>一些常用的正则表达式如下，主要参考<a href="http://www.cnblogs.com/peida/" target="_blank" rel="external">这篇文章</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">^  <span class="comment">#锚定行的开始 如：'^grep'匹配所有以grep开头的行。    </span></div><div class="line">$  <span class="comment">#锚定行的结束 如：'grep$'匹配所有以grep结尾的行。    </span></div><div class="line">.  <span class="comment">#匹配一个非换行符的字符 如：'gr.p'匹配gr后接一个任意字符，然后是p。    </span></div><div class="line">*  <span class="comment">#匹配零个或多个先前字符 如：'*grep'匹配所有一个或多个空格后紧跟grep的行。    </span></div><div class="line">.*   <span class="comment">#一起用代表任意字符。   </span></div><div class="line">[]   <span class="comment">#匹配一个指定范围内的字符，如'[Gg]rep'匹配Grep和grep。    </span></div><div class="line">[^]  <span class="comment">#匹配一个不在指定范围内的字符，如：'[^A-FH-Z]rep'匹配不包含A-R和T-Z的一个字母开头，紧跟rep的行。    </span></div><div class="line">\(..\)  <span class="comment">#标记匹配字符，如'\(love\)'，love被标记为1。    </span></div><div class="line">\&lt;      <span class="comment">#锚定单词的开始，如:'\&lt;grep'匹配包含以grep开头的单词的行。    </span></div><div class="line">\&gt;      <span class="comment">#锚定单词的结束，如'grep\&gt;'匹配包含以grep结尾的单词的行。    </span></div><div class="line">x\&#123;m\&#125;  <span class="comment">#重复字符x，m次，如：'o\&#123;5\&#125;'匹配包含5个o的行。    </span></div><div class="line">x\&#123;m,\&#125;  <span class="comment">#重复字符x,至少m次，如：'o\&#123;5,\&#125;'匹配至少有5个o的行。    </span></div><div class="line">x\&#123;m,n\&#125;  <span class="comment">#重复字符x，至少m次，不多于n次，如：'o\&#123;5,10\&#125;'匹配5--10个o的行。   </span></div><div class="line">\w    <span class="comment">#匹配文字和数字字符，也就是[A-Za-z0-9]，如：'G\w*p'匹配以G后跟零个或多个文字或数字字符，然后是p。   </span></div><div class="line">\W    <span class="comment">#\w的反置形式，匹配一个或多个非单词字符，如点号句号等。   </span></div><div class="line">\b    <span class="comment">#单词锁定符，如: '\bgrep\b'只匹配grep。</span></div></pre></td></tr></table></figure>
+<p><strong>举例:</strong>匹配以ms结尾的行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">[root@localhost dir1]<span class="comment"># cat test.txt </span></div><div class="line">PING www.a.shifen.com (220.181.112.244) 56(84) bytes of data.</div><div class="line">64 bytes from 220.181.112.244: icmp_seq=1 ttl=128 time=19.4 ms</div><div class="line">64 bytes from 220.181.112.244: icmp_seq=2 ttl=128 time=24.0 ms</div><div class="line">64 bytes from 220.181.112.244: icmp_seq=3 ttl=128 time=35.7 ms</div><div class="line">64 bytes from 220.181.112.244: icmp_seq=4 ttl=128 time=20.6 ms</div><div class="line">64 bytes from 220.181.112.244: icmp_seq=5 ttl=128 time=21.5 ms</div><div class="line"></div><div class="line">--- www.a.shifen.com ping statistics ---</div><div class="line">5 packets transmitted, 5 received, 0% packet loss, time 4008ms</div><div class="line">rtt min/avg/max/mdev = 19.486/24.287/35.706/5.905 ms</div><div class="line">[root@localhost dir1]<span class="comment"># grep ms$ test.txt </span></div><div class="line">64 bytes from 220.181.112.244: icmp_seq=1 ttl=128 time=19.4 ms</div><div class="line">64 bytes from 220.181.112.244: icmp_seq=2 ttl=128 time=24.0 ms</div><div class="line">64 bytes from 220.181.112.244: icmp_seq=3 ttl=128 time=35.7 ms</div><div class="line">64 bytes from 220.181.112.244: icmp_seq=4 ttl=128 time=20.6 ms</div><div class="line">64 bytes from 220.181.112.244: icmp_seq=5 ttl=128 time=21.5 ms</div><div class="line">5 packets transmitted, 5 received, 0% packet loss, time 4008ms</div><div class="line">rtt min/avg/max/mdev = 19.486/24.287/35.706/5.905 ms</div></pre></td></tr></table></figure>
+<p><strong><font color="#40a800">rm – Remove</font></strong></p>
+<p><strong>格式：</strong>find [路径] [参数] [-print -exec -xargs … ]<br><strong>功能：</strong>find指令非常强大，它能够在目录结构中寻找文件。<br><strong>常用参数： </strong></p>
+<blockquote>
+<p>-name 安装文件名查找<br>-perm 安装文献权限查找<br>-group 安装文件所属组查找<br>-type 查找某一类型文件<br>b—块设备文件<br>d—目录<br>c—字符设备文件<br>p—管道文件<br>l—符号链接文件<br>f—普通文件<br>-amin n   查找系统中最后N分钟访问的文件<br>-atime n  查找系统中最后n<em>24小时访问的文件<br>-cmin n   查找系统中最后N分钟被改变文件状态的文件<br>-ctime n  查找系统中最后n</em>24小时被改变文件状态的文件<br>-mmin n   查找系统中最后N分钟被改变文件数据的文件<br>-mtime n  查找系统中最后n*24小时被改变文件数据的文件<br>rtt min/avg/max/mdev = 19.486/24.287/35.706/5.905 ms</p>
+</blockquote>
+<p><strong>举例:</strong></p>
+<p><strong>一般用途</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ls -R</span></div><div class="line">.:</div><div class="line">dir1  dir2</div><div class="line"></div><div class="line">./dir1:</div><div class="line">file1.txt  hello1.java</div><div class="line"></div><div class="line">./dir2:</div><div class="line">hello1.java  hello2.java  hello3.java</div><div class="line"><span class="comment"># find . -name "hello*"</span></div><div class="line">./dir2/hello2.java</div><div class="line">./dir2/hello1.java</div><div class="line">./dir2/hello3.java</div><div class="line">./dir1/hello1.java</div></pre></td></tr></table></figure>
+<p><strong>配合其他指令使用 –exec</strong></p>
+<p>exec选项后面跟随着所要执行的命令或脚本，然后是一对儿{ }，一个空格和一个\，最后是一个分号，比如查找hello开头的文件并将其复制到./new目录中：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># find . -name "hello*" -exec cp &#123;&#125; new \;</span></div><div class="line">cp: ‘./new/hello2.java’ and ‘new/hello2.java’ are the same file</div><div class="line">cp: ‘./new/hello1.java’ and ‘new/hello1.java’ are the same file</div><div class="line">cp: ‘./new/hello3.java’ and ‘new/hello3.java’ are the same file</div><div class="line"><span class="comment"># ls new</span></div><div class="line">hello1.java  hello2.java  hello3.java</div></pre></td></tr></table></figure>
+<p><strong>配合其他指令使用 –xargs</strong></p>
+<p>-exec 是将匹配到的文件一起传递给exec执行，而-xargs则是批量传递，在处理大量结果时一般使用-xargs，前者会报溢出错误，具体细节还和不同系统有关，比如同样上面的操作：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ls -R</span></div><div class="line">.:</div><div class="line">dir1  dir2  new</div><div class="line"></div><div class="line">./dir1:</div><div class="line">file1.txt</div><div class="line"></div><div class="line">./dir2:</div><div class="line">hello1.java  hello2.java  hello3.java</div><div class="line"></div><div class="line">./new:</div><div class="line"><span class="comment"># find . -name "hello*" | xargs cp -t new </span></div><div class="line"><span class="comment"># ls new</span></div><div class="line">hello1.java  hello2.java  hello3.java</div></pre></td></tr></table></figure>
+<p><strong><font color="#40a800">tar 、gzip</font></strong></p>
+<p><strong>格式：</strong>tar [选项] [文件或文件夹]</p>
+<p><strong>功能：</strong>创建、查看和打包压缩文件。打包是将一大堆文件或目录变成一个总的文件，便于管理和传输，而压缩则是将一个大的文件通过某种压缩算法变成一个小文件。</p>
+<p><strong>常用参数：</strong>前五个是必要参数，后面为可选参数</p>
+<blockquote>
+<p>-c 新建压缩文件<br>-t 查看压缩文件<br>-x 提取压缩文件<br>-v 显示操作过程<br>-z支持gzip压缩文件<br>-f 指定压缩后的文件<br>-C 切换到指定目录</p>
+</blockquote>
+<p><strong>举例:</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ls</span></div><div class="line">hello1.java  hello2.java  hello3.java  TEST</div><div class="line"><span class="comment"># tar -cvf test.tar hello*.java</span></div><div class="line">hello1.java</div><div class="line">hello2.java</div><div class="line">hello3.java</div><div class="line"><span class="comment"># ls</span></div><div class="line">hello1.java  hello2.java  hello3.java  TEST  test.tar</div><div class="line"><span class="comment"># tar -zcvf test.tar.gz hello*.java</span></div><div class="line">hello1.java</div><div class="line">hello2.java</div><div class="line">hello3.java</div><div class="line"><span class="comment"># ls</span></div><div class="line">hello1.java  hello2.java  hello3.java  TEST  test.tar  test.tar.gz</div><div class="line"><span class="comment"># ll</span></div><div class="line">total 44</div><div class="line">-rw-r--r--. 1 root root 10240 Feb  1 17:25 hello1.java</div><div class="line">-rw-r--r--. 1 root root    24 Feb  1 16:46 hello2.java</div><div class="line">-rw-r--r--. 1 root root    24 Feb  1 17:07 hello3.java</div><div class="line">drwxr-xr-x. 2 root root     6 Feb  1 17:24 TEST</div><div class="line">-rw-r--r--. 1 root root 20480 Feb  1 17:26 test.tar</div><div class="line">-rw-r--r--. 1 root root   196 Feb  1 17:26 test.tar.gz</div><div class="line"><span class="comment"># tar -zxvf test.tar.gz -C ./TEST</span></div><div class="line">hello1.java</div><div class="line">hello2.java</div><div class="line">hello3.java</div></pre></td></tr></table></figure>
+<p><strong><font color="#40a800">who</font></strong></p>
+<p><strong>格式：</strong>who [选项]</p>
+<p><strong>功能：</strong>关机或重启系统，均建议查看是否有用户当前真在操作该系统，以免误伤，而who指令就可以得知当前哪些用户正在登录。</p>
+<p><strong>常用参数：</strong> </p>
+<blockquote>
+<p>-u 显示空置时间，若一分钟内操作过则标识成“.”，该用户24小时没有任何东西则标识成“old”<br>-q或–count当前登录用户数</p>
+</blockquote>
+<p><strong>举例:</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># who -u</span></div><div class="line">root     pts/0        2017-02-01 10:43   .          3154 (192.168.196.2)</div></pre></td></tr></table></figure>
+<p><strong><font color="#40a800">su – Swtich User</font></strong></p>
+<p><strong>格式：</strong>su [选项] [参数]</p>
+<p><strong>功能：</strong>Linux较于Windows很大的一点好处就是增强了对于权限的管理，比如有些操作只开放给一些特定的用户，如果不具备该权限的账号想完成该操作，就需要切换到其他具有该权限的账户。超级用户拥有绝对权限，即切换到其他用户不需要输入密码。</p>
+<p><strong>常用参数：</strong> </p>
+<blockquote>
+<ul>
+<li>或 -l 改变身份的同时，也更改工作目录、Shell环境以及path变量等<br>-c 执行完指令后，恢复原来身份 </li>
+</ul>
+</blockquote>
+<p><strong>举例:</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ su <span class="_">-l</span></div><div class="line">Password: </div><div class="line">Last login: Wed Feb  1 18:16:06 CST 2017 on pts/0</div></pre></td></tr></table></figure>
+<p><strong><font color="#40a800">chmod</font></strong></p>
+<p><strong>格式：</strong>chmod [选项] [参数]</p>
+<p><strong>功能：</strong>Linux所有资源均被表示成文件的形式，而chmod指令即用来修改文件或目录的访问权限。权限分为r（读）、w（写）和x（执行）三类，用户也分为三类为文件创建者、同组用户和其他用户。比如下面test.txt，其中-rw-r–r–，共9个字符每三个分别代表一种用户，它们表示文件所有者rw-，同组用户和其他用户r–，即文件所有者可以读和写文件但不可以执行。文件所有者可以赋予所有其他所有用户，但其他权限需要超级管理员或相应管理员或赋予。为了方便，一般用数字代表相应的权限，r在最高位用4表示，w在中间用2表示，x在最低位用1表示，比如7就代表所有用户均具备所有权限。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ll test.txt </span></div><div class="line">-rw-r--r--. 1 root root 535 Feb  1 21:06 test.txt</div></pre></td></tr></table></figure>
+<p><strong>常用参数：</strong> </p>
+<blockquote>
+<p>-R递归赋值目标目录所有字文件的权限</p>
+</blockquote>
+<p><strong>举例:</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ll</span></div><div class="line">total 20</div><div class="line">-rw-r--r--. 1 root root 10240 Feb  1 17:25 hello1.java</div><div class="line">-rw-r--r--. 1 root root    24 Feb  1 16:46 hello2.java</div><div class="line">-rw-r--r--. 1 root root    24 Feb  1 17:07 hello3.java</div><div class="line"><span class="comment"># chmod 777 hello1.java </span></div><div class="line"><span class="comment"># ll</span></div><div class="line">total 20</div><div class="line">-rwxrwxrwx. 1 root root 10240 Feb  1 17:25 hello1.java</div><div class="line">-rw-r--r--. 1 root root    24 Feb  1 16:46 hello2.java</div><div class="line">-rw-r--r--. 1 root root    24 Feb  1 17:07 hello3.java</div></pre></td></tr></table></figure>
+<p><strong><font color="#40a800">ping</font></strong></p>
+<p><strong>格式：</strong>ping [地址] </p>
+<p><strong>功能：</strong>通过发送数据包，ping远程服务器，用来检查网络连接和服务器状态。</p>
+<p><strong>举例：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># ping www.baidu.com</span></div><div class="line">PING www.a.shifen.com (220.181.111.188) 56(84) bytes of data.</div><div class="line">64 bytes from 220.181.111.188: icmp_seq=1 ttl=128 time=23.7 ms</div><div class="line">64 bytes from 220.181.111.188: icmp_seq=2 ttl=128 time=37.1 ms</div><div class="line">64 bytes from 220.181.111.188: icmp_seq=3 ttl=128 time=24.1 ms</div></pre></td></tr></table></figure>
+<p><strong><font color="#40a800">wget</font></strong></p>
+<p><strong>格式：</strong>wget [选项] [参数]</p>
+<p><strong>功能：</strong>从网络上自动下载文件的自由工具，支持HTTP，HTTPS和FTP协议。</p>
+<p><strong>常用参数： </strong></p>
+<blockquote>
+<p>-c 断点续传，在后台执行<br>-i 批量下载，比如-i filename.txt，自动下载文件中文件<br>–accept 只下载指定扩展名的文件</p>
+</blockquote>
+<p><strong><font color="#40a800">shutdown</font></strong></p>
+<p><strong>格式：</strong>shutdown [选项] [参数]</p>
+<p><strong>功能：</strong>安全的执行系统关机或重启。</p>
+<p><strong>常用参数：</strong> </p>
+<blockquote>
+<p>-r 重启，比如-r +10表示十分钟后重启<br>-k仅把发送警告信号给每个登录用户，不是真正关机<br>-h 关机后关闭电源，比如-h now表示立刻关机</p>
+</blockquote>
+<p>举例:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># shutdown -h now</span></div><div class="line">Connection closed by foreign host.</div><div class="line">Disconnected from remote host(CentOS_7) at 21:57:28.</div></pre></td></tr></table></figure>
+<p><strong><font color="#40a800">ps – Process Status</font></strong></p>
+<p><strong>格式：</strong>ps [选项] [参数]</p>
+<p><strong>功能：</strong>列出当前系统中运行进程的快照，可以查看不同进程的状态、是否结束和占用资源的情况。如果需要实时监控，则可以使用top指令。</p>
+<p><strong>常用参数： </strong></p>
+<blockquote>
+<p>-aux 显示所有包含其他用户的进程<br>-e 显示环境变量<br>-f 显示程序间关系<br>-a 同一终端下所有进程<br>-u 指定用户进程</p>
+</blockquote>
+<p><strong>举例，列出所有进程：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#ps -aux</span></div><div class="line">USER        PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</div><div class="line">root          1  0.0  0.2 191444  6576 ?        Ss   11:07   0:08 /usr/lib/systemd/systemd --switched-root --system --deserialize 21</div><div class="line">root          2  0.0  0.0      0     0 ?        S    11:07   0:00 [kthreadd]</div><div class="line">root          3  0.0  0.0      0     0 ?        S    11:07   0:00 [ksoftirqd/0]</div><div class="line">root          5  0.0  0.0      0     0 ?        S&lt;   11:07   0:00 [kworker/0:0H]</div><div class="line">root          7  0.0  0.0      0     0 ?        S    11:07   0:00 [migration/0]</div><div class="line">root          8  0.0  0.0      0     0 ?        S    11:07   0:00 [rcu_bh]</div><div class="line">root          9  0.0  0.0      0     0 ?        S    11:07   0:00 [rcuob/0]</div><div class="line">……</div></pre></td></tr></table></figure>
+<p><strong>其中个列含义：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">USER：该 process 属于那个使用者账号的</div><div class="line">PID ：该 process 的号码</div><div class="line">%CPU：该 process 使用掉的 CPU 资源百分比</div><div class="line">%MEM：该 process 所占用的物理内存百分比</div><div class="line">VSZ ：该 process 使用掉的虚拟内存量 (Kbytes)</div><div class="line">RSS ：该 process 占用的固定的内存量 (Kbytes)</div><div class="line">TTY ：该 process 是在那个终端机上面运作，若与终端机无关，则显示 ?，另外， tty1-tty6 是本机上面的登入者程序，若为 pts/0 等等的，则表示为由网络连接进主机的程序。</div><div class="line">STAT：该程序目前的状态，主要的状态有S、R 、T、D和Z</div><div class="line">START：该 process 被触发启动的时间</div><div class="line">TIME ：该 process 实际使用 CPU 运作的时间</div><div class="line">COMMAND：该程序的实际指令</div></pre></td></tr></table></figure>
+<p><strong>各状态含义：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">D：不可中断 Uninterruprible Sleep 比如IO，收到信号不唤醒和不可运行, 进程必须等待，直到有中断发生</div><div class="line">R：运行或者执行队列中 Runnable or on Run Queue </div><div class="line">S：中断 Sleep 休眠或者受阻，等待接收信号或某个条件形成</div><div class="line">T：停止 Traced or Stopped 进程收到SIGSTOP, SIGSTP, SIGTIN, SIGTOU信号后停止运行运行</div><div class="line">Z：僵死 Zombie Process，进程已终止, 但进程描述符存在, 直到父进程调用<span class="built_in">wait</span>4()系统调用后释放</div></pre></td></tr></table></figure>
+<p><strong><font color="#40a800">top</font></strong></p>
+<p><strong>格式：</strong>top [选项] [参数]</p>
+<p><strong>功能：</strong>实时显示系统中各个进程的资源占用状况，类似于Windows的任务管理器。</p>
+<p><strong>常用参数：</strong></p>
+<blockquote>
+<p>-b 批处理<br>-l 忽略失效过程<br>-p 指定进程<br>-u 指定用户进程</p>
+</blockquote>
+<p><strong>举例，列出所有进程：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># top</span></div><div class="line">top - 19:56:23 up  8:48,  2 users,  load average: 0.00, 0.01, 0.05</div><div class="line">Tasks: 398 total,   1 running, 397 sleeping,   0 stopped,   0 zombie</div><div class="line">%Cpu(s):  0.1 us,  0.1 sy,  0.0 ni, 99.8 id,  0.0 wa,  0.0 hi,  0.1 si,  0.0 st</div><div class="line">KiB Mem :  2386604 total,  1473696 free,   412464 used,   500444 buff/cache</div><div class="line">KiB Swap:  2097148 total,  2097148 free,        0 used.  1755968 avail Mem </div><div class="line"></div><div class="line">   PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                                                                                                                  </div><div class="line"> 11372 root      20   0  146372   2336   1432 R   1.0  0.1   0:00.21 top                                                                                                                      </div><div class="line">   137 root      20   0       0      0      0 S   0.3  0.0   0:12.69 rcu_sched                                                                                                                </div><div class="line">   138 root      20   0       0      0      0 S   0.3  0.0   0:04.21 rcuos/0                                                                                                                  </div><div class="line">   292 root      20   0       0      0      0 S   0.3  0.0   0:37.23 kworker/0:1</div></pre></td></tr></table></figure>
+<p><strong>其中前五行是系统的整体情况，第6行空行，第7行含义如下：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">PID — 进程id</div><div class="line">USER — 进程所有者</div><div class="line">PR — 进程优先级</div><div class="line">NI — nice值。负值表示高优先级，正值表示低优先级</div><div class="line">VIRT — 进程使用的虚拟内存总量，单位kb。VIRT=SWAP+RES</div><div class="line">RES — 进程使用的、未被换出的物理内存大小，单位kb。RES=CODE+DATA</div><div class="line">SHR — 共享内存大小，单位kb</div><div class="line">S — 进程状态。D=不可中断的睡眠状态 R=运行 S=睡眠 T=跟踪/停止 Z=僵尸进程</div><div class="line">%CPU — 上次更新到现在的CPU时间占用百分比</div><div class="line">%MEM — 进程使用的物理内存百分比</div><div class="line">TIME+ — 进程使用的CPU时间总计，单位1/100秒</div><div class="line">COMMAND — 进程名称（命令名/命令行）</div></pre></td></tr></table></figure>
+<p><strong><font color="#40a800">kill 和killall</font></strong></p>
+<p><strong>格式：</strong>kill 或killall[选项] [进程]</p>
+<p><strong>功能：</strong>终止指定进程。一般终止前台进程可以使用Ctrl+C，而后台进程就需要这两个指令。通过ps、top等指令获得PID，然后借助kill就可以杀掉该进程。默认是发送编号为15的TERM信号，但对于一些无法捕获该信号的进程一般发送编号为9的信号，强行杀掉。不到外不得已一般不使用，因为它会导致正在运行中的数据丢失。而kilall指令是用来杀掉指定名称的进程。root用户使用将影响所有用户进程，而非root用户只对影响自己进程。</p>
+<p><strong>kill常用参数：</strong> </p>
+<blockquote>
+<p>-l 列出所有信号<br>-s 发送指定信号<br>-p 只打印相关进程好，而不发送信号<br>-u 指定用户进程</p>
+</blockquote>
+<p><strong>killall常用参数：</strong> </p>
+<blockquote>
+<p>-Z 只杀死拥有scontext 的进程<br>-e 要求匹配进程名称<br>-g 杀死进程组而不是进程<br>-i 交互模式，杀死进程前先询问用户<br>-w 等待进程死亡</p>
+</blockquote>
+<p><strong>常用信号：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">HUP    1    终端断线</div><div class="line">INT     2    中断（同 Ctrl + C）</div><div class="line">QUIT    3    退出（同 Ctrl + \）</div><div class="line">TERM   15    终止</div><div class="line">KILL    9    强制终止</div><div class="line">CONT   18    继续（与STOP相反， <span class="built_in">fg</span>/<span class="built_in">bg</span>命令）</div><div class="line">STOP    19    暂停（同 Ctrl + Z）</div></pre></td></tr></table></figure>
+<p><strong><font color="#40a800">free/font&gt;</font></strong><br><strong>格式：</strong>free [选项] [参数]<br><strong>功能：</strong>显示显示系统使用和空闲的内存情况，包括物理内存、交互区内存(swap)和内核缓冲区内存（共享内存将被忽略）。<br><strong>常用参数：</strong></p>
+<blockquote>
+<p>-b 　以Byte为单位显示内存使用情况。<br>-k 　以KB为单位显示内存使用情况。<br>-m 　以MB为单位显示内存使用情况。<br>-g   以GB为单位显示内存使用情况。<br>-o 　不显示缓冲区调节列。<br>-s&lt;间隔秒数&gt; 　持续观察内存使用状况。<br>-t 　显示内存总和列。 </p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># free -m</span></div><div class="line">              total        used        free      shared  buff/cache   available</div><div class="line">Mem:           2330         402        1439           8         489        1715</div><div class="line">Swap:          2047           0        2047</div></pre></td></tr></table></figure>
 
       
     </div>
