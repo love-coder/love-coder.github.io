@@ -93,11 +93,11 @@
 <meta property="og:description" content="GitHub Pages免费提供300M不限流量的空间，提供给全球用户搭建公共静态页面托管服务。我看到网上不少人担忧这样好的服务如果被国人滥用，可能会导致GitHub Pages封锁国内账号，从而带来更大的不便。希望大家一起严于律己，更好的利用这个资源，让更多的技术人因此受益。
 这篇文章记录了利用GitHub Pages搭建个人博客的所有过程。文章分为三个部分：快速开始、变得更好和其他补充。快速开">
 <meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/githubpages_create_repo.png?imageView2/2/w/500/h/335">
-<meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/article1/domain_create.png?imageView2/2/w/500/h/335">
+<meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/domain_create.png?imageView2/2/w/500/h/335">
 <meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/add_ssh_key.png?imageView2/2/w/500/h/335">
-<meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/understand_domain.png?imageView2/2/w/500/h/335">
+<meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/understand_domain.png">
 <meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/qiniu_picture_prefix.png?imageView2/2/w/500/h/335">
-<meta property="og:updated_time" content="2017-02-03T04:45:51.986Z">
+<meta property="og:updated_time" content="2017-02-03T04:59:03.049Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux 简明教程">
 <meta name="twitter:description" content="GitHub Pages免费提供300M不限流量的空间，提供给全球用户搭建公共静态页面托管服务。我看到网上不少人担忧这样好的服务如果被国人滥用，可能会导致GitHub Pages封锁国内账号，从而带来更大的不便。希望大家一起严于律己，更好的利用这个资源，让更多的技术人因此受益。
@@ -379,9 +379,9 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># git init</span></div><div class="line"><span class="comment"># git add index.html</span></div><div class="line"><span class="comment"># git commit -m "我的第一篇博客"</span></div><div class="line"><span class="comment"># git remote add origin https://github.com/love-coder/love-coder.github.io.git</span></div><div class="line"><span class="comment"># git push -u origin master</span></div></pre></td></tr></table></figure>
 <p>在浏览器中输入<strong>love-coder.github.io</strong>即可以访问。</p>
 <p><strong>本质：</strong>在GitHub中创建的love-coder.github.io仓库中master分支中的静态文件可以被直接访问。理论上，依据这种方法我们就可以开始构建自己的博客了，但是我们只是想写文章，而这种原始的方式除此之外还需要写HTML、CSS甚至JS文件，显然太过繁琐。因此出现了很多框架，让我们专注于博客本身即写文章，而无需去考虑怎么生成静态文件。Hexo就是这样一款基于Node.js的框架。</p>
-<h2 id="测试图片"><a href="#测试图片" class="headerlink" title="测试图片"></a>测试图片</h2><img title="域名创建" alt="域名创建" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/article1/domain_create.png?imageView2/2/w/500/h/335">
+<h2 id="测试图片"><a href="#测试图片" class="headerlink" title="测试图片"></a>测试图片</h2><img title="域名创建" alt="域名创建" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/domain_create.png?imageView2/2/w/500/h/335">
 <hr>
-<h2 id=""><a href="#" class="headerlink" title=""></a><img title="添加SSH" alt="添加SSH" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/add_ssh_key.png?imageView2/2/w/500/h/335"></h2><h2 id="-1"><a href="#-1" class="headerlink" title=""></a><img title="域名绑定" alt="域名绑定" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/understand_domain.png?imageView2/2/w/500/h/335"></h2><img title="七牛外链地址" alt="七牛外链地址" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/qiniu_picture_prefix.png?imageView2/2/w/500/h/335">
+<h2 id=""><a href="#" class="headerlink" title=""></a><img title="添加SSH" alt="添加SSH" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/add_ssh_key.png?imageView2/2/w/500/h/335"></h2><h2 id="-1"><a href="#-1" class="headerlink" title=""></a><img title="域名绑定" alt="域名绑定" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/understand_domain.png"></h2><img title="七牛外链地址" alt="七牛外链地址" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/qiniu_picture_prefix.png?imageView2/2/w/500/h/335">
 <h2 id="变得更好"><a href="#变得更好" class="headerlink" title="变得更好"></a>变得更好</h2><h2 id="其他补充"><a href="#其他补充" class="headerlink" title="其他补充"></a>其他补充</h2>
       
     </div>
