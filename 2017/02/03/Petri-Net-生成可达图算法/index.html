@@ -93,7 +93,7 @@
 <meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/petri_graph/petri_model.png?imageView2/2/w/600">
 <meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/petri_graph/graph_alg.png?imageView2/2/w/600">
 <meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/petri_graph/petri_graph_alg.png?imageView2/2/w/600">
-<meta property="og:updated_time" content="2017-02-04T07:52:04.424Z">
+<meta property="og:updated_time" content="2017-02-04T07:55:30.277Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Petri Net 生成可达图算法">
 <meta name="twitter:description" content="Petri Net和自动机、马尔科夫链等离散数学工具一样被广泛运用在各个领域，如制造系统、路径预测和规划以及生物建模等。但我们也发现，国内几乎没有针对Petri Net仿真和建模的成熟软件，这也为该学科在国内的推广带来了难题。SIMIPN参考了国际上一些仅有的开源代码以及我们自己的理解，最后运用Java语言编码。目前可以分析包括可达图生成、不等式计算、信标和陷阱检测和路径规划等在内的多个分析模块。">
@@ -362,8 +362,8 @@
 
       
         <p>Petri Net和自动机、马尔科夫链等离散数学工具一样被广泛运用在各个领域，如制造系统、路径预测和规划以及生物建模等。但我们也发现，国内几乎没有针对Petri Net仿真和建模的成熟软件，这也为该学科在国内的推广带来了难题。SIMIPN参考了国际上一些仅有的开源代码以及我们自己的理解，最后运用Java语言编码。目前可以分析包括可达图生成、不等式计算、信标和陷阱检测和路径规划等在内的多个分析模块。后期待SIMIPN稳定后，我们会逐步将其开源。</p>
-<p>可达图生成算法作为Petri Net研究的基础，它的分析以及结果具有很大代表性。下面我将叙述如何我们是如何提出问题、以及如何解决这个问题。通过本文，可以看到一个实际系统是怎么被建模，模型是怎么被数据结构表示以及怎么运算这些数据结构。文章也将沿着这个思路展开：模型输入、算法以及实现，最后是一些我的思考<strong>。我假设您已经了解了关于Petri Net的基础知识及基本图论知识，比如图的邻接矩阵和邻接表表示方法、BFS（广度优先遍历）算法等。</strong></p>
 <a id="more"></a>
+<p>可达图生成算法作为Petri Net研究的基础，它的分析以及结果具有很大代表性。下面我将叙述如何我们是如何提出问题、以及如何解决这个问题。通过本文，可以看到一个实际系统是怎么被建模，模型是怎么被数据结构表示以及怎么运算这些数据结构。文章也将沿着这个思路展开：模型输入、算法以及实现，最后是一些我的思考<strong>。我假设您已经了解了关于Petri Net的基础知识及基本图论知识，比如图的邻接矩阵和邻接表表示方法、BFS（广度优先遍历）算法等。</strong></p>
 <h2 id="模型如何输入"><a href="#模型如何输入" class="headerlink" title="模型如何输入"></a><font color="#fc6423">模型如何输入</font></h2><p>我们都知道，任何物理模型要想被计算机理解，首先需要转化为数学模型，并将核心的部分用合适数据结构表示，比如链表、二叉树、图等。合适的数据结构配合好的算法能够极大提高解决问题的效率，比如更快的获得运算结果。<strong>探索新的领域，一个比较好的方法就是拿它和自己熟悉的相关领域对比，对比他们的相同和不同。</strong></p>
 <p>参考图的邻接矩阵表示方法以及结合Petri Net自有特性，我们发现可以借助一个一维数组和两个二维数组表示一个Pure Petir Net。比如下图是一个简单的单进程生产线的数学模型，它含有8个库所和4个变迁。我们用前置矩阵I代表每个每个库所的前置变迁信息，比如<em>I</em>[1][4]=1指库所1的前置变迁为4且权值为1，类似后置矩阵O表示库所和后置变迁的关系。Marking数组表示初始托肯分布情况。数组中对应每个位置值就代表相应库所中含有的托肯数。</p>
 <img title="模型表示" alt="模型表示" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/petri_graph/petri_model.png?imageView2/2/w/600">
