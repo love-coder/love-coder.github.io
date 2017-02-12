@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Web,业务总结,Java," />
+  <meta name="keywords" content="Web,业务理解,Java,MVC,Spring," />
 
 
 
@@ -84,16 +84,19 @@
 
 
 
-<meta name="description" content="最近看到学校某学院网站的源码，深吸一口气，怎么可以这样写？所有的逻辑都写在了PHP页面上，甚至包括连接数据库的参数。是不是让我写就会好很多呢？打开了之前某机场售票项目代码，那是我一年前上线的第一个独立负责的项目，看了几眼其中的代码，顿时也哭笑不得。喜的是，一年过去了，能知道过去的不足，说明这一年进步了。要知道当时这个项目上线时，第一天就产生400多交易订单，那会对自己的代码多么自信。忧的是，当时尽">
+<meta name="description" content="这一年最大的感触就是说话小心谨慎了，更愿意多花点时间去了解技术背后的东西，尤其是对于不懂的技术。越来越觉得任何技术的出现都是为了解决当时存在的某个或某些问题。有些技术表面上牺牲了一定的灵活性，但是开发效率却大大提高了；有些技术在一些人看来可能无法理解，但是如果结合历史背景和具体场景，也许原本“不堪”的设计才是最好的设计。
+最近一个月都在整理过往的笔记。期间打开了某机场售票项目代码，那是我一年前上线">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Web开发总结(一年)">
 <meta property="og:url" content="http://yoursite.com/2017/02/12/Web开发总结-一年/index.html">
 <meta property="og:site_name" content="点滴记录">
-<meta property="og:description" content="最近看到学校某学院网站的源码，深吸一口气，怎么可以这样写？所有的逻辑都写在了PHP页面上，甚至包括连接数据库的参数。是不是让我写就会好很多呢？打开了之前某机场售票项目代码，那是我一年前上线的第一个独立负责的项目，看了几眼其中的代码，顿时也哭笑不得。喜的是，一年过去了，能知道过去的不足，说明这一年进步了。要知道当时这个项目上线时，第一天就产生400多交易订单，那会对自己的代码多么自信。忧的是，当时尽">
-<meta property="og:updated_time" content="2017-02-12T02:24:03.191Z">
+<meta property="og:description" content="这一年最大的感触就是说话小心谨慎了，更愿意多花点时间去了解技术背后的东西，尤其是对于不懂的技术。越来越觉得任何技术的出现都是为了解决当时存在的某个或某些问题。有些技术表面上牺牲了一定的灵活性，但是开发效率却大大提高了；有些技术在一些人看来可能无法理解，但是如果结合历史背景和具体场景，也许原本“不堪”的设计才是最好的设计。
+最近一个月都在整理过往的笔记。期间打开了某机场售票项目代码，那是我一年前上线">
+<meta property="og:updated_time" content="2017-02-12T11:49:11.691Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web开发总结(一年)">
-<meta name="twitter:description" content="最近看到学校某学院网站的源码，深吸一口气，怎么可以这样写？所有的逻辑都写在了PHP页面上，甚至包括连接数据库的参数。是不是让我写就会好很多呢？打开了之前某机场售票项目代码，那是我一年前上线的第一个独立负责的项目，看了几眼其中的代码，顿时也哭笑不得。喜的是，一年过去了，能知道过去的不足，说明这一年进步了。要知道当时这个项目上线时，第一天就产生400多交易订单，那会对自己的代码多么自信。忧的是，当时尽">
+<meta name="twitter:description" content="这一年最大的感触就是说话小心谨慎了，更愿意多花点时间去了解技术背后的东西，尤其是对于不懂的技术。越来越觉得任何技术的出现都是为了解决当时存在的某个或某些问题。有些技术表面上牺牲了一定的灵活性，但是开发效率却大大提高了；有些技术在一些人看来可能无法理解，但是如果结合历史背景和具体场景，也许原本“不堪”的设计才是最好的设计。
+最近一个月都在整理过往的笔记。期间打开了某机场售票项目代码，那是我一年前上线">
 
 
 
@@ -357,10 +360,17 @@
       
 
       
-        <p>最近看到学校某学院网站的源码，深吸一口气，怎么可以这样写？所有的逻辑都写在了PHP页面上，甚至包括连接数据库的参数。是不是让我写就会好很多呢？打开了之前某机场售票项目代码，那是我一年前上线的第一个独立负责的项目，看了几眼其中的代码，顿时也哭笑不得。喜的是，一年过去了，能知道过去的不足，说明这一年进步了。要知道当时这个项目上线时，第一天就产生400多交易订单，那会对自己的代码多么自信。忧的是，当时尽管已经有意识从包管理、类命名、变量命名等角度去规范代码，但还停留在人云亦云的角度，比如将大量的业务逻辑写在了Controller里面，而这原本应该是很薄的类。这带来的直接坏处就是，后面开发其他模块时，没法直接复用业务代码，本质上就是还没有意识到抽象出Service层。是不是抽象出Service层就好了？带着这些问题，用了几天时间陆续整理出这篇总结。</p>
+        <p>这一年最大的感触就是说话小心谨慎了，更愿意多花点时间去了解技术背后的东西，尤其是对于不懂的技术。<strong>越来越觉得任何技术的出现都是为了解决当时存在的某个或某些问题。</strong>有些技术表面上牺牲了一定的灵活性，但是开发效率却大大提高了；有些技术在一些人看来可能无法理解，但是如果结合历史背景和具体场景，也许原本“不堪”的设计才是最好的设计。</p>
+<p>最近一个月都在整理过往的笔记。期间打开了某机场售票项目代码，那是我一年前上线的第一个独立负责的项目，看了几眼其中的代码，顿时也哭笑不得。喜的是，一年过去了，能知道过去的不足，说明这一年进步了。忧的是，当时尽管已经有意识从包管理、类命名、变量命名等角度去规范代码，但还停留在人云亦云的角度，比如将大量的业务逻辑写在了Controller里面，而这原本应该是很薄的类。这带来的直接坏处就是，后面开发其他模块时，没法直接复用业务代码，本质上就是还没有意识到抽象出Service层。是不是抽象出Service层就好了？带着这些问题，用了几天时间陆续整理出这篇总结。</p>
 <a id="more"></a>
-<h2 id="Web是什么"><a href="#Web是什么" class="headerlink" title="Web是什么"></a><font color="#fc6423">Web是什么</font></h2><p><strong>1. </strong></p>
+<h2 id="Web是什么"><a href="#Web是什么" class="headerlink" title="Web是什么"></a><font color="#fc6423">Web是什么</font></h2><p><strong>1. </strong><br>早期的Web应用，可以视为是基于HTTP 1.0协议的静态应用。简单理解就是，用户通过在浏览器输入一串URL，就可以看到网页，并可以通过超链接实现不同页面的跳转。比如，我们可以用下面的Java编码实现上述功能：通过在本地监听在80端口，并根据不同用户访问的参数不同（这里是GET方式直接写在URL中）回复不同的内容。当然我只是简单示意，一般意义上静态页面技术还包括CSS和JS。它们关系可以简单理解为，HTML是内容，CSS是装饰，JS是动作（效果）。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
+<p><strong>如果以现在的角度来看，上述实现存在什么问题？</strong></p>
+<p><strong>1. 页面内容一层不变（也不一定不好，视具体场景定，比如博客）</strong></p>
+<p><strong>2. 需要自己实现管理HTTP连接</strong></p>
+<p><strong>3. 代码臃肿，难以维护</strong></p>
+<p><strong>4. 单机应用</strong></p>
+<p>新技术出现的背景<br>Tomcat<br>HTTP/HTTPS<br>Web Service<br>Java Web<br>RPC<br>MQ<br>SOAP<br>Restful<br>Web Socket<br>Node.js</p>
 <h2 id="Web开发基础"><a href="#Web开发基础" class="headerlink" title="Web开发基础"></a><font color="#fc6423">Web开发基础</font></h2><h2 id="Web开发框架"><a href="#Web开发框架" class="headerlink" title="Web开发框架"></a><font color="#fc6423">Web开发框架</font></h2><h2 id="服务化架构"><a href="#服务化架构" class="headerlink" title="服务化架构"></a><font color="#fc6423">服务化架构</font></h2><h2 id="对业务开发的思考"><a href="#对业务开发的思考" class="headerlink" title="对业务开发的思考"></a><font color="#fc6423">对业务开发的思考</font></h2>
       
     </div>
@@ -386,9 +396,13 @@
           
             <a href="/tags/Web/" rel="tag"># Web</a>
           
-            <a href="/tags/业务总结/" rel="tag"># 业务总结</a>
+            <a href="/tags/业务理解/" rel="tag"># 业务理解</a>
           
             <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/MVC/" rel="tag"># MVC</a>
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
           
         </div>
       
@@ -497,7 +511,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
