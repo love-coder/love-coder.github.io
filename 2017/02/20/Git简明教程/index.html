@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="韩春的个人博客" />
+  <meta name="keywords" content="Git,版本管理," />
 
 
 
@@ -86,16 +86,15 @@
 
 <meta name="description" content="Git作为分布式版本管理工具的代表，用来记录文件随时间变化的记录，以便于跟踪文件变化情况。Git每次提交都是对项目文件的一次完整拷贝，其中对于没有变化的文件只保存指向上一版本的指针。加上其压缩算法，使得Git尤其对于文本类型的文件管理效率非常高。本文将从基本使用、原理概述和使用建议三部分分别叙述。其中基本使用部分，我们假设程序猿A、B和C在项目开发中不同阶段加入，阐述不同阶段遇到的问题和解决方法。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="近期将更新文章">
-<meta property="og:url" content="http://yoursite.com/2017/02/28/近期将更新文章/index.html">
+<meta property="og:title" content="Git简明教程">
+<meta property="og:url" content="http://yoursite.com/2017/02/20/Git简明教程/index.html">
 <meta property="og:site_name" content="技术博客">
 <meta property="og:description" content="Git作为分布式版本管理工具的代表，用来记录文件随时间变化的记录，以便于跟踪文件变化情况。Git每次提交都是对项目文件的一次完整拷贝，其中对于没有变化的文件只保存指向上一版本的指针。加上其压缩算法，使得Git尤其对于文本类型的文件管理效率非常高。本文将从基本使用、原理概述和使用建议三部分分别叙述。其中基本使用部分，我们假设程序猿A、B和C在项目开发中不同阶段加入，阐述不同阶段遇到的问题和解决方法。">
 <meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/git_study/git_working_stage_repo.png">
 <meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/git_study/merge_rebase.png">
-<meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/githubpages_create_repo.png">
-<meta property="og:updated_time" content="2017-02-28T09:34:26.423Z">
+<meta property="og:updated_time" content="2017-02-28T09:43:28.846Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="近期将更新文章">
+<meta name="twitter:title" content="Git简明教程">
 <meta name="twitter:description" content="Git作为分布式版本管理工具的代表，用来记录文件随时间变化的记录，以便于跟踪文件变化情况。Git每次提交都是对项目文件的一次完整拷贝，其中对于没有变化的文件只保存指向上一版本的指针。加上其压缩算法，使得Git尤其对于文本类型的文件管理效率非常高。本文将从基本使用、原理概述和使用建议三部分分别叙述。其中基本使用部分，我们假设程序猿A、B和C在项目开发中不同阶段加入，阐述不同阶段遇到的问题和解决方法。">
 <meta name="twitter:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/git_study/git_working_stage_repo.png">
 
@@ -125,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/02/28/近期将更新文章/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/02/20/Git简明教程/"/>
 
 
 
 
 
-  <title> 近期将更新文章 | 技术博客 </title>
+  <title> Git简明教程 | 技术博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -254,7 +253,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/28/近期将更新文章/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/20/Git简明教程/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="韩 春">
@@ -278,7 +277,7 @@
             
             
               
-                近期将更新文章
+                Git简明教程
               
             
           </h1>
@@ -293,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-28T17:33:05+08:00">
-                2017-02-28
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-20T10:19:30+08:00">
+                2017-02-20
               </time>
             
 
@@ -304,6 +303,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/工具/" itemprop="url" rel="index">
+                    <span itemprop="name">工具</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -312,8 +333,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/02/28/近期将更新文章/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/28/近期将更新文章/" itemprop="commentCount"></span>
+                <a href="/2017/02/20/Git简明教程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/20/Git简明教程/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -398,7 +419,6 @@
 <p><strong><font color="#40a800">查看文件修改历史</font></strong></p>
 <p>自己写的程序被别人不小心修改了，想知道具体是谁修改的，可以执行blame指令。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># git blame Test.java</span></div><div class="line">6b241164 (hanchun    2017-02-27 21:55:13 +0800  1) public class Test&#123;</div><div class="line">54b555bf (hanchun    2017-02-27 22:50:34 +0800  2)   int i = 0;</div><div class="line">2726244c (love-coder 2017-02-27 23:06:23 +0800  3)   int q = 0;</div><div class="line">84f4e898 (hanchun    2017-02-28 11:21:15 +0800  4)   int j = 4;</div><div class="line">2726244c (love-coder 2017-02-27 23:06:23 +0800  5)   int m = 0;</div><div class="line">2726244c (love-coder 2017-02-27 23:06:23 +0800  6)   int n = 0;</div></pre></td></tr></table></figure>
-<img title="新建仓库" alt="新建仓库" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/github_blog/githubpages_create_repo.png">
 <p><strong><font color="#40a800">拉分支开发</font></strong></p>
 <p>多人在同一个分支上开发，容易冲突，严重拖慢开发效率。此时，就可以拉取不同的分支进行开发。待开发完成后，并经过测试再合并到master分支上。这其中还有很多其他好的分支使用习惯，后续再整理。</p>
 <p><strong><font color="#40a800">会用git log和git reflog</font></strong></p>
@@ -434,13 +454,21 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Git/" rel="tag"># Git</a>
+          
+            <a href="/tags/版本管理/" rel="tag"># 版本管理</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/26/动态规划/" rel="next" title="动态规划">
-                <i class="fa fa-chevron-left"></i> 动态规划
+              <a href="/2017/02/16/Web开发总结-一年/" rel="next" title="Web开发总结(一年)">
+                <i class="fa fa-chevron-left"></i> Web开发总结(一年)
               </a>
             
           </div>
@@ -448,6 +476,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/26/动态规划/" rel="prev" title="动态规划">
+                动态规划 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -473,8 +505,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/28/近期将更新文章/"
-           data-title="近期将更新文章" data-url="http://yoursite.com/2017/02/28/近期将更新文章/">
+      <div class="ds-thread" data-thread-key="2017/02/20/Git简明教程/"
+           data-title="Git简明教程" data-url="http://yoursite.com/2017/02/20/Git简明教程/">
       </div>
     
   </div>
