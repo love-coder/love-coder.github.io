@@ -1,0 +1,804 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="面试,笔试,校招,Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="自己参加过不少面试，有做的好的，也有做的不好的，结合前几日一次偶然和今日头条HR同学聊天所思，花了半天时间整理了这篇总结，希望对正在准备面试的同学有所帮助。文章分为技术准备部分（以Java开发为例，其他技术岗位类似）和HR面准备分别叙述。我觉得最好的面试准备就是站在面试官或者企业角度想，他们可能需要什么样的小伙伴？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一些校招面试经历的整理">
+<meta property="og:url" content="http://yoursite.com/2017/03/06/一些校招面试经历的整理/index.html">
+<meta property="og:site_name" content="技术博客">
+<meta property="og:description" content="自己参加过不少面试，有做的好的，也有做的不好的，结合前几日一次偶然和今日头条HR同学聊天所思，花了半天时间整理了这篇总结，希望对正在准备面试的同学有所帮助。文章分为技术准备部分（以Java开发为例，其他技术岗位类似）和HR面准备分别叙述。我觉得最好的面试准备就是站在面试官或者企业角度想，他们可能需要什么样的小伙伴？">
+<meta property="og:updated_time" content="2017-03-07T14:04:15.545Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一些校招面试经历的整理">
+<meta name="twitter:description" content="自己参加过不少面试，有做的好的，也有做的不好的，结合前几日一次偶然和今日头条HR同学聊天所思，花了半天时间整理了这篇总结，希望对正在准备面试的同学有所帮助。文章分为技术准备部分（以Java开发为例，其他技术岗位类似）和HR面准备分别叙述。我觉得最好的面试准备就是站在面试官或者企业角度想，他们可能需要什么样的小伙伴？">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/03/06/一些校招面试经历的整理/"/>
+
+
+
+
+
+  <title> 一些校招面试经历的整理 | 技术博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">技术博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/06/一些校招面试经历的整理/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="韩 春">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="技术博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="技术博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                一些校招面试经历的整理
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-06T21:58:03+08:00">
+                2017-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/阶段总结/" itemprop="url" rel="index">
+                    <span itemprop="name">阶段总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/03/06/一些校招面试经历的整理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/06/一些校招面试经历的整理/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>自己参加过不少面试，有做的好的，也有做的不好的，结合前几日一次偶然和今日头条HR同学聊天所思，花了半天时间整理了这篇总结，希望对正在准备面试的同学有所帮助。文章分为技术准备部分（以Java开发为例，其他技术岗位类似）和HR面准备分别叙述。我觉得最好的面试准备就是<strong>站在面试官或者企业角度想，他们可能需要什么样的小伙伴？</strong><br><a id="more"></a></p>
+<h2 id="技术面准备"><a href="#技术面准备" class="headerlink" title="技术面准备"></a><font color="#fc6423">技术面准备</font></h2><p>技术面往往考察求职者技术的<strong>广度和深度</strong>。广度要求求职者对自己所在领域有系统的认识，且对新技术充满热情。深度则要求求职者基础扎实，一方面是计算机的基础知识比如基础算法、操作系统、网络技术等，另一方面是对常用技术有过深入了解底层原理，能举一反三。下面说的知识点的比较理想要求是能够把它们简明扼要的叙述出来，于此同时还对其中某些技术有过深入研究，最好还能有可以展示的项目或Demo。</p>
+<font color="#40a800">基础数据结构和算法</font>
+
+<p>这些内容为基础中的基础，面试时往往会要求白板写（线上面试有时要求共享网页写，类似记事本，两边都可以看到），笔试也往往至少两题，重要性不言而喻。这块除了平时不放松练习外还需要再面试前多刷刷题，比如牛客网、LeetCode等，书籍可以参考《编程之美》《剑指Offer》等。</p>
+<p>常用数据结构：栈、队列、链表，二叉树、平衡树、红黑树、B 树、散列表、图<br>常见排序算法如快排、堆排、归并等<br>图论中广度和深度优先遍历、最短路径、公共祖先等<br>动态规划算法<br>贪婪算法</p>
+<font color="#40a800">网络技术</font>
+
+<p>OSI七层模型和TCP/IP四层模型<br>Session和Cookie关系、保持状态的几种方法、节点集群后如何保持Session共享<br>HTTP常见头字段和状态码<br>TCP状态切换关系<br>DNS解析过程<br>常见路由算法<br>子网掩码<br>Socket编程</p>
+<font color="#40a800">操作系统</font>
+
+<p>进程和线程的关系<br>Linux常见指令<br>内核（如果研究过，很加分）<br>服务器排错思路</p>
+<font color="#40a800">Java 语言</font>
+
+<p>一般集合类如ArrayList、LinkedList、HashMap、HashSet、TreeSet<br>线程安全集合类如ConcurrentHashMap、CopyOnWriteArrayList、ConcurrentLinkedQueue、BlockingQueue<br>关键字：final、volatile、synchronized<br>线程安全相关：锁比如ReetrantLock、ReadWriteLock等、死锁必要条件、Atomic、Threadlocal、线程通信、Executor框架<br>四大引用：强、软、弱、虚<br>Servlet规范，比如是否线程安全、生命周期<br>jar包原理和war包规范<br>反射和字节码技术<br>池化技术<br>常见设计模式，比如抽象工厂、代理、模板、门面、观察者和装饰等<br>常见GC算法如引用数计数、标记-清除、复制、标记压缩等<br>BIO、NIO以及AIO：BIO是基础，NIO能阐述清楚，最好自己实现一个Demo，AIO能说明设计思路<br>类加载机制<br>JVM模型如计数器、栈、堆和方法区<br>JVM优化思路，如设置最大最小堆、新生代大小、线程栈大小、堆比例分配等</p>
+<font color="#40a800">数据库（主要是关系型数据库）</font>
+
+<p>各类SQL书写<br>ACID以及事务隔离<br>索引原理<br>查询优化思路<br>分表分库<br>非关系型数据库实现原理和适用场景</p>
+<font color="#40a800">版本管理工具Git和SVN，以及项目管理工具Maven的用法和实现原理</font>
+
+<font color="#40a800">框架原理</font>
+
+<p>不在多，在于有没有切实研究过一些底层原理。若问到不会的，可以借此说，我研究过跟它类似的或者相关的什么什么。</p>
+<p>Spring IOC、AOP、MVC、事务等原理<br>Tomcat 原理<br>Mybatis原理<br>Nginx原理</p>
+<font color="#40a800">新技术</font>
+
+<p>对其中一个或几个有过比较深的学习，能够叙述其核心的设计原理且写过相关技术文章。</p>
+<p>Node以及Node框架<br>MQ如Kafka<br>Cache如Redis<br>RPC如Duboo</p>
+<font color="#40a800">项目经历</font>
+
+<p>叙述项目时，首先简明说明项目是做什么的，取得哪些成果。然后说明自己在项目中处于什么位置，实际做了哪些工作。最后，阐述项目的难点和解决办法。不同类型面试官的侧重点不一样，同时提问的问题往往也是根据求职者的回答随机产生。偏管理型的面试官，更多的是希望看到求职者能够站在比较高的角度阐述问题且思路清晰、目标明确，而偏技术型的面试官则希望求职者能够把一些技术细节阐述清楚且有深度。</p>
+<h2 id="HR面准备"><a href="#HR面准备" class="headerlink" title="HR面准备"></a><font color="#fc6423">HR面准备</font></h2><p>原来一直觉得HR面是比较随意的，无非是聊聊理想，看看性格，只需要把真实的自己呈现出来就可以。这句话不错，但其实可以做的更好。面试前做一些准备，可以更加从容的面对面试。下面观点为整理和HR同学聊天记录所写，主要是站在HR角度看一些常见问题的背后原因。HR面不同技术面试，更多的会从性格、沟通、生理以及价值观方面考察面试者，以此判断求职能否融入新团队且能持续为团队做出贡献。<strong>踏实、皮实、稳定、技术过硬、自驱力明显</strong>的求职者往往容易被认可。面试中要坦诚和自信，同时能够客观公正看待自己的长处和不足。</p>
+<font color="#40a800">1. 能简单介绍下你吗？</font>
+
+<p>这个问题很容易被准备，但是很容易回答的没特色。简要且重点突出的自我介绍，往往能给面试官留下好的第一印象。</p>
+<font color="#40a800">2. 能说说你最近在做什么吗？</font>
+
+<p>HR朋友说，这个问题他很喜欢问，一般也不会被面试者准备。如果是一个勤思考，有追求的求职者，这个问题会阐述的很清晰且有逻辑。反之，如果回答的支支吾吾，就说明求职者对没有强烈的规划意识。当然，如果求职者回答的是和技术相关，一般HR还会引导他说说除技术以外的事情。HR往往觉得，勤思考且自驱力强，潜力大的求职者往往除了在工作上有所追求外，在其他领域也会有所研究，哪怕是哲学、政治和管理等。</p>
+<font color="#40a800">3. 在你最闲的时候一般做什么？</font>
+
+<p>最闲的时候，如果还能不忘沉淀和探索新的领域，往往他的自驱力就非常强烈。</p>
+<font color="#40a800">4. 在你最忙的时候一般几点休息？</font>
+
+<p>这个问题侧面反映求职者过往的工作强度以及对工作的热情。</p>
+<font color="#40a800">5. 能方便介绍你最好的三个朋友吗？</font>
+
+<p>性格好且有人格魅力的人，往往都会有几个好朋友。这些朋友往往也能侧面说明求职者平日是什么样的人。</p>
+<font color="#40a800">6. 对你打击最大的事情是什么？</font>
+
+<p>过往的经历往往能预测一个人在今后做类似事情的反应。提问打击最大的事情，一来是观察求职者有没有经历过挫折，二来观察求职者有没有养成从过往事情中总结和反思的习惯。经历过较大挫折且能够很好面对的人，今后面对不同程度的挫折往往也能表现的更加皮实。</p>
+<font color="#40a800">7. 你做的最棒的一件事是什么？</font>
+
+<p>这个问题和第6个问题相似。不同的是，能够看出面试者过往的成就，也能看出面试者的价值观取向，将什么视为最棒。</p>
+<font color="#40a800">8. 能说说你的家庭吗？</font>
+
+<p>成长环境往往决定一个人很多东西，比如性格。高学历且温馨的家庭往往后辈也知书达理，一般不会性格太怪（针对校招，社招会更多的关注伴侣和孩子）。</p>
+<font color="#40a800">9. 能说说你在你现在团队的位置吗（在学校的一些经历）？</font>
+
+<p>首先，不能抱怨这个团队。抱怨现在所处团队，那么抱怨下个团队的概率也会很大。如果真的存在问题，也要能够比较公正和客观的阐述出来，千万不能言语偏激。其次，如果求职者说自己在团队中处于领导位置，那么HR会问，遇到过哪些难以推进的事情？一来验证真实性，二来看求职者领导风格跟企业是否相称。如果，处于基础开发位置，则会问如何和意见不同的同学交流问题？就是论事且能选择合理沟通方式的求职者一般会比较好。</p>
+<font color="#40a800">10. 你对你现在所处环境满意吗？</font>
+
+<p>HR往往希望得到客观公正的回答且不抱怨环境。</p>
+<font color="#40a800">11. 说说你最近看的几本书吧？</font>
+
+<p>看面试者是否有不断学习的意识。这要求求职者不加思考的把书名和内容简明扼要阐述出来。此外，高质量的求职者往往看偏理论的书，而初级求职者往往看一些小说、传记或者技术上以实践为主的书。</p>
+<font color="#40a800">12. 能说说你对我们部门的理解吗？</font>
+
+<p>主要考察面试者的诚意以及对自己职业生涯有没有做认真的规划。</p>
+<font color="#40a800">13. 一般有哪些体育爱好？</font>
+
+<p>身体素质也是需要考察的因素之一。且通过回答内容，分析求职者有没有很好的时间规划意识，能合理的安排锻炼和工作的关系。当然，还能引申出类似的问题，观察求职者能否平衡好工作和生活。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/面试/" rel="tag"># 面试</a>
+          
+            <a href="/tags/笔试/" rel="tag"># 笔试</a>
+          
+            <a href="/tags/校招/" rel="tag"># 校招</a>
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/06/Web开发总结-一年-之业务开发的思考/" rel="next" title="Web开发总结(一年)之业务开发的思考">
+                <i class="fa fa-chevron-left"></i> Web开发总结(一年)之业务开发的思考
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/03/06/一些校招面试经历的整理/"
+           data-title="一些校招面试经历的整理" data-url="http://yoursite.com/2017/03/06/一些校招面试经历的整理/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="韩 春" />
+          <p class="site-author-name" itemprop="name">韩 春</p>
+          <p class="site-description motion-element" itemprop="description">一个认真的程序员的成长点滴</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/love-coder" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#技术面准备"><span class="nav-number">1.</span> <span class="nav-text">技术面准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HR面准备"><span class="nav-number">2.</span> <span class="nav-text">HR面准备</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">韩 春</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hanchun"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>
