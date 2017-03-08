@@ -93,8 +93,8 @@
 <meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/summary_web_service/one_server.png">
 <meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/summary_web_service/frame_and_container.png">
 <meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/summary_web_service/softloading_in_service.png">
-<meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/summary_web_service/frame_and_container.png">
-<meta property="og:updated_time" content="2017-03-08T15:13:29.309Z">
+<meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/summary_web_service/rpc_understanding.png">
+<meta property="og:updated_time" content="2017-03-08T15:22:33.346Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web开发总结(一年)之服务化架构的理解">
 <meta name="twitter:description" content="本篇文章是《Web开发总结(一年)》系列的服务化架构理解篇。文中主要介绍我在过去一年对于接触的服务化架构的一些开发经验以及一些思考，当然也部分参考了一些书籍如阿里华黎《大型网站系统与中间件实践》等。对于文中出现的一些基础知识，如网络通信、反射、动态代理、序列化/反序列化、进程和线程、IO模型以及类加载等在该篇中将不会详细叙述。您可以参考本博客中其他相关系列文章。文章由单机系统面临的问题作为出发点，">
@@ -364,7 +364,7 @@
       
         <p>本篇文章是《Web开发总结(一年)》系列的服务化架构理解篇。文中主要介绍我在过去一年对于接触的服务化架构的一些开发经验以及一些思考，当然也部分参考了一些书籍如阿里华黎《大型网站系统与中间件实践》等。对于文中出现的一些基础知识，如网络通信、反射、动态代理、序列化/反序列化、进程和线程、IO模型以及类加载等在该篇中将不会详细叙述。您可以参考本博客中其他相关系列文章。文章由单机系统面临的问题作为出发点，看它是如何一步步转变成为服务化架构。</p>
 <a id="more"></a>
-<h2 id="单机为什么一定要向多机即集群方向转变"><a href="#单机为什么一定要向多机即集群方向转变" class="headerlink" title="单机为什么一定要向多机即集群方向转变"></a><font color="#fc6423">单机为什么一定要向多机即集群方向转变</font></h2><p>相信很多人部署的第一个Web应用就是上图所示的模式，所有组件全部在一台服务器上。但是随着访问量的变大和业务变得越来越复杂，单台服务器性能（一般指CPU、内存和磁盘IO）很快会到达瓶颈。同时考虑到服务的可用性，此时也必须考虑在多台机器上部署应用。比如将数据库单独放到一台机器上，并同时在另外两台服务器上部署Web容器。但是以上思路可能带来的一些新的问题：</p>
+<h2 id="单机向多机即集群转变"><a href="#单机向多机即集群转变" class="headerlink" title="单机向多机即集群转变"></a><font color="#fc6423">单机向多机即集群转变</font></h2><p>相信很多人部署的第一个Web应用就是上图所示的模式，所有组件全部在一台服务器上。但是随着访问量的变大和业务变得越来越复杂，单台服务器性能（一般指CPU、内存和磁盘IO）很快会到达瓶颈。同时考虑到服务的可用性，此时也必须考虑在多台机器上部署应用。比如将数据库单独放到一台机器上，并同时在另外两台服务器上部署Web容器。但是以上思路可能带来的一些新的问题：</p>
 <img title="单机应用示意图" alt="单机应用示意图" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/summary_web_service/one_server.png">
 <font color="#40a800">1. 状态如何共享</font>
 
@@ -419,7 +419,7 @@
 <p>通过<strong>数据压缩算法</strong>减低数据传输量，尤其是在服务器重启时，这也是典型的CPU换网络带宽的事例；<strong>全量和增量</strong>数据的选择，全量易于实现，但数据传输效率低；增量效率高，但实现难度大。</p>
 <h2 id="一次远程方法调用—RPC"><a href="#一次远程方法调用—RPC" class="headerlink" title="一次远程方法调用—RPC"></a><font color="#fc6423">一次远程方法调用—RPC</font></h2><p>单机调用和被调用方法在同一个OS上，这个过程变得十分简单，本质是将计数指针指向被掉方法入口。可对于跨机器的方法调用呢？</p>
 <p>为了有个更直白的认识，我写了一个基于Java实现的简单RPC Demo（在我的GitHub上），并且画了下面的示意图。同样，我们看设计一款RPC框架需要考虑哪些因素：</p>
-<img title="RPC示意图" alt="RPC示意图" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/summary_web_service/frame_and_container.png">
+<img title="RPC示意图" alt="RPC示意图" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/summary_web_service/rpc_understanding.png">
 <font color="#40a800">1. 序列化/反序列化</font>
 
 <p>本质上就是对象和二进制数据之间的转换。考虑选用何种序列化/反序列方式，主要基于化通用性（不同语言之间）、性能开销以及虚拟化之后的数据大小等因素。这也从另一个角度阐述了计算机科学里一个常识，没有什么技术是绝对好的。不同的视角（或者理解为不同的应用背景）往往选出两个截然不同的解决方法，而它们都是好的解决方案。</p>
@@ -629,7 +629,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#单机为什么一定要向多机即集群方向转变"><span class="nav-number">1.</span> <span class="nav-text">单机为什么一定要向多机即集群方向转变</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#框架和应用的关系"><span class="nav-number">2.</span> <span class="nav-text">框架和应用的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#寻址和路由—软负载中心和配置管理中心"><span class="nav-number">3.</span> <span class="nav-text">寻址和路由—软负载中心和配置管理中心</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一次远程方法调用—RPC"><span class="nav-number">4.</span> <span class="nav-text">一次远程方法调用—RPC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一次消息的传递—MQ"><span class="nav-number">5.</span> <span class="nav-text">一次消息的传递—MQ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务治理"><span class="nav-number">6.</span> <span class="nav-text">服务治理</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#单机向多机即集群转变"><span class="nav-number">1.</span> <span class="nav-text">单机向多机即集群转变</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#框架和应用的关系"><span class="nav-number">2.</span> <span class="nav-text">框架和应用的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#寻址和路由—软负载中心和配置管理中心"><span class="nav-number">3.</span> <span class="nav-text">寻址和路由—软负载中心和配置管理中心</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一次远程方法调用—RPC"><span class="nav-number">4.</span> <span class="nav-text">一次远程方法调用—RPC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一次消息的传递—MQ"><span class="nav-number">5.</span> <span class="nav-text">一次消息的传递—MQ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务治理"><span class="nav-number">6.</span> <span class="nav-text">服务治理</span></a></li></ol></div>
             
 
           </div>
