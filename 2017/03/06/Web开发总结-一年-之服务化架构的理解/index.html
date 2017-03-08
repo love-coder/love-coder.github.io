@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="韩春的个人博客" />
+  <meta name="keywords" content="Java,微服务,RPC,MQ,Config Server," />
 
 
 
@@ -84,16 +84,21 @@
 
 
 
-<meta name="description" content="一个认真的程序员的成长点滴">
+<meta name="description" content="本篇文章是《Web开发总结(一年)》系列的服务化架构理解篇。文中主要介绍我在过去一年对于接触的服务化架构的一些开发经验以及一些思考，当然也部分参考了一些书籍如阿里华黎《大型网站系统与中间件实践》等。对于文中出现的一些基础知识，如网络通信、反射、动态代理、序列化/反序列化、进程和线程、IO模型以及类加载等在该篇中将不会详细叙述。您可以参考本博客中其他相关系列文章。文章由单机系统面临的问题作为出发点，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Web开发总结(一年)之服务化架构的理解">
 <meta property="og:url" content="http://yoursite.com/2017/03/06/Web开发总结-一年-之服务化架构的理解/index.html">
 <meta property="og:site_name" content="技术博客">
-<meta property="og:description" content="一个认真的程序员的成长点滴">
-<meta property="og:updated_time" content="2017-03-06T13:56:33.045Z">
+<meta property="og:description" content="本篇文章是《Web开发总结(一年)》系列的服务化架构理解篇。文中主要介绍我在过去一年对于接触的服务化架构的一些开发经验以及一些思考，当然也部分参考了一些书籍如阿里华黎《大型网站系统与中间件实践》等。对于文中出现的一些基础知识，如网络通信、反射、动态代理、序列化/反序列化、进程和线程、IO模型以及类加载等在该篇中将不会详细叙述。您可以参考本博客中其他相关系列文章。文章由单机系统面临的问题作为出发点，">
+<meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/summary_web_service/one_server.png">
+<meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/summary_web_service/frame_and_container.png">
+<meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/summary_web_service/softloading_in_service.png">
+<meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/summary_web_service/frame_and_container.png">
+<meta property="og:updated_time" content="2017-03-08T15:13:29.309Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web开发总结(一年)之服务化架构的理解">
-<meta name="twitter:description" content="一个认真的程序员的成长点滴">
+<meta name="twitter:description" content="本篇文章是《Web开发总结(一年)》系列的服务化架构理解篇。文中主要介绍我在过去一年对于接触的服务化架构的一些开发经验以及一些思考，当然也部分参考了一些书籍如阿里华黎《大型网站系统与中间件实践》等。对于文中出现的一些基础知识，如网络通信、反射、动态代理、序列化/反序列化、进程和线程、IO模型以及类加载等在该篇中将不会详细叙述。您可以参考本博客中其他相关系列文章。文章由单机系统面临的问题作为出发点，">
+<meta name="twitter:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/summary_web_service/one_server.png">
 
 
 
@@ -300,6 +305,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/阶段总结/" itemprop="url" rel="index">
+                    <span itemprop="name">阶段总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -335,7 +362,84 @@
       
 
       
-        
+        <p>本篇文章是《Web开发总结(一年)》系列的服务化架构理解篇。文中主要介绍我在过去一年对于接触的服务化架构的一些开发经验以及一些思考，当然也部分参考了一些书籍如阿里华黎《大型网站系统与中间件实践》等。对于文中出现的一些基础知识，如网络通信、反射、动态代理、序列化/反序列化、进程和线程、IO模型以及类加载等在该篇中将不会详细叙述。您可以参考本博客中其他相关系列文章。文章由单机系统面临的问题作为出发点，看它是如何一步步转变成为服务化架构。</p>
+<a id="more"></a>
+<h2 id="单机为什么一定要向多机即集群方向转变"><a href="#单机为什么一定要向多机即集群方向转变" class="headerlink" title="单机为什么一定要向多机即集群方向转变"></a><font color="#fc6423">单机为什么一定要向多机即集群方向转变</font></h2><p>相信很多人部署的第一个Web应用就是上图所示的模式，所有组件全部在一台服务器上。但是随着访问量的变大和业务变得越来越复杂，单台服务器性能（一般指CPU、内存和磁盘IO）很快会到达瓶颈。同时考虑到服务的可用性，此时也必须考虑在多台机器上部署应用。比如将数据库单独放到一台机器上，并同时在另外两台服务器上部署Web容器。但是以上思路可能带来的一些新的问题：</p>
+<img title="单机应用示意图" alt="单机应用示意图" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/summary_web_service/one_server.png">
+<font color="#40a800">1. 状态如何共享</font>
+
+<p><strong>Session Sticky：</strong>相同的Session每次都路由到同一台机器上。简单易于实现，如根据sessionId做Hash后决定落脚机器。但是这种方法没有从根本上解决可用性问题，一台节点故障任然会影响相应机器上的用户状态丢失。</p>
+<p><strong>Session Replication：</strong>不同机器间Session信息相互复制。这对于早期访问不大的时候很实用，且实现难度可控。但是当用户增多之后，相互复制会浪费带宽且争夺机器资源（网络IO、CPU）。</p>
+<p><strong>Session集中存储：</strong>这种方法比较普遍，建立Session集群统一管理，且带宽相对于相互复制而言有很大优势。比如登录阿里系网站，如淘宝、天猫、阿里云等都是跳转到统一登录页面。</p>
+<font color="#40a800">2. 数据库压力大</font>
+
+<p>缓存热数据，提高命中率；</p>
+<p>水平切分，对SQL进行路由；</p>
+<p>读写分离，同时做容灾备份应对突发情况；</p>
+<p>垂直切分，分库。</p>
+<font color="#40a800">3. 稳定性如何保障</font>
+
+<p>应避免单点故障；</p>
+<p>集群中的节点无状态且服务部署在多机房甚至异地双活等。</p>
+<font color="#40a800">4. 应用多且依赖关系复杂</font>
+
+<p>水平拆分，建立服务化架构。</p>
+<p><strong>另外一些需要潜在解决的问题：</strong></p>
+<font color="#40a800">1. 全局时钟</font>
+
+<p>一般用来检查事件发生前后次序、生产全局唯一订单号等。有时还需要生成一个全局唯一主键，在阿里时是通过一个单独的Sequence服务完成。这个服务设计的思路，后面可以单独拿出来写写，也很有意思；</p>
+<font color="#40a800">2. 全局事务，强弱一致性</font>
+
+<p>服务化架构让原本散落在多个系统中的相似服务独立成一个个服务，让系统整理变更加清晰和立体。而服务化架构需要解决的第一个问题就是<strong>寻址和路由</strong>，即如何找到相应的服务。其次是如何完成<strong>一次远程方法调用或消息传递</strong>。最后就是在系统运行过程中完成<strong>服务治理</strong>，如上下线感知、调用统计、限流、降级等。下面文章也将沿此脉络展开叙述。在具体展开之前，我们先看一个不可避免的问题即新设计的架构和原系统应该是什么样的关系？</p>
+<h2 id="框架和应用的关系"><a href="#框架和应用的关系" class="headerlink" title="框架和应用的关系"></a><font color="#fc6423">框架和应用的关系</font></h2><p>设计任何架构这是需要考虑的第一个问题即框架和原应用是什么关系。这里主要有两个维度的考虑因素分别是<strong>部署方式是否灵活和Jar冲突是否好解决</strong>。部署方式一般有三种：作为容器的一部分，随容器启用而启动；作为应用的一个依赖包，在容器内随应用启动而启动；对于不使用容器的应用，框架本身作为一个容器。事实上，这三种方式在实际开发中，我都遇见过。这个一方面跟当时开发容器的历史环境有关系（很多时候，为了考虑跟历史系统兼容，需要妥协），另一方面也跟当时已有一些基础模块有关（实现成本考虑）。长远角度来看，我觉得这三种方式还会并存很长时间。因为作为容器一部分需要适配不同容器，而作为依赖包需则要在程序中做很多配置且依旧需要适配容器，作为容器运行开发量也不小。Jar冲突的解决方式主要是利用Java的类加载机制，实现<strong>用户自定义加载器</strong>。这部分细节，后续会专门写一篇来说明（事实上这也有一些专门的框架在做，比如阿里Pandora）。</p>
+<img title="框架和应用的关系" alt="框架和应用的关系" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/summary_web_service/frame_and_container.png">
+<h2 id="寻址和路由—软负载中心和配置管理中心"><a href="#寻址和路由—软负载中心和配置管理中心" class="headerlink" title="寻址和路由—软负载中心和配置管理中心"></a><font color="#fc6423">寻址和路由—软负载中心和配置管理中心</font></h2><p>寻址和路由这个问题非常有意思，大到在DNS层面通过路由完成负载均衡，小到方法层面的路由实现找到相应处理Handler。这个过程中无外乎做两件事，<strong>首先目标是找到那个它，并且在找到的那个它中间看看哪条路径更好（多维度判断，比如时延、可靠性、稳定性等）。</strong></p>
+<p>软负载中心和配置管理中心完成的工作类似，可以根据配置文件是否需要持久化区分。一般言，软负载中心是为了管理非持久化数据，而配置管理中心是为了管理持久化数据。下面均以软负载中心设计中必须考虑的因素举例。</p>
+<font color="#40a800">1. 软负载中心在服务化架构中位置（以RPC方式为例）</font>
+
+<img title="软负载在服务化架构中的位置" alt="软负载在服务化架构中的位置" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/summary_web_service/softloading_in_service.png">
+<p>软负载中心一般需要完成两个功能：聚合地址信息和对生命周期感知。地址信息比如org.xidian.Service.XxxService:1.0.0这个服务在10.170.2.1、10.170.2.2和10.170.2.3三台机器上10001端口被提供，那么在软服务中心则需要记录这些信息。生命周期感知是指在服务主动或被动（服务异常等情况）上下线时，软服务中心要能够主动告知服务订阅者更新订阅数据等。</p>
+<font color="#40a800">2. 元数据到底是什么</font>
+
+<p>元数据包括接口名（一般格式为org.xidian.Service.XxxService）、版本号、订阅者/服务方的IP和端口、服务分组等，也就是能够完全标记该服务的一类信息。为此，服务端主要将保存三种数据即聚合数据、订阅关系和连接数据：</p>
+<p><strong>聚合数据：</strong>聚合后的地址信息列表，一般是Key—Value结构，其中Key一般由服务唯一标示dataId（接口名：版本号，如org.xidian.Service.XxxService:1.0.0）和分组group唯一确定；</p>
+<p><strong>订阅关系：</strong>订阅的粒度和聚合数据的粒度应该保持一致，即通过dataId和group确定。聚合数据发生变化时，要通过订阅关系通知订阅者；</p>
+<p><strong>连接数据：</strong>连接到软负载中心的节点和软负载中心的连接管理。比如订阅数据发生变化后，需要通过订阅关系找到需要通知的groupId，然后在连接数据里找到相应的数据连接，完成一次主动更新订阅端的数据。</p>
+<font color="#40a800">3. 客户端和服务端分别做什么</font>
+
+<p>客户端和服务端是相对于软负载中心而言，其中客户端就是服务提供方和服务订阅方，服务端就是软负载本身。软负载服务端除了负责保存上面所述的服务元数据外，还要能提供根据服务的所处状态及时更新服务元数据，并且主动推给服务订阅方。拿RPC服务来说，服务提供方在服务启动后，就将该服务配置的相关参数，比如接口名、版本号以及分组等信息随所在机器的IP和端口一起发送到软负载服务端。服务端更新完数据后则立即推送给客户端即服务订阅者。服务订阅者当需要调取该服务时，如果本地已经缓存了这些数据（若没有，则主动到软负载中心去订阅相应服务），则取出这些可以提供服务的地址，再根据配置的路由规则如同机房优先等选择一个服务提供方，发起调用请求。</p>
+<font color="#40a800">4. 如何感知上下线</font>
+
+<p>一般可以让服务提供方，定期给软负载中心发送<strong>心跳包</strong>。软负载服务端根据服务提供方有没有在一定时间间隔内发来心跳包，以此来判断服务是否可用。这潜在存在两个问题，一是可能会误判，比如软负载到服务提供方链路不通，但是订阅方可以通。这种情况其实服务可用的，但是软负载中心任然会下线该服务；二来如果软负载中心处理压力很大，来不及处理心跳包也会误判服务不可用。设计的时候，可以在判断服务不可能用时，让订阅方多调用服务提供方一次，以此判断是否下线服务。</p>
+<font color="#40a800">5. 集群和容灾备份</font>
+
+<p>集群和容灾是任何分布式系统设计必须面对的问题。集群的目的除了提高处理能力外，还要能够保障单个节点故障不会导致整个服务不可用（理想的设计是每个节点都无状态）。容灾则是进一步防范，比如最近很多人在讨论的GitLab和AWS S3故障就是此类问题。做了完全考虑还是架不住各种意外，容灾能够在系统出现故障后使系统恢复到最近一次备份状态。对于MySQL而言，可以简单通过Master—Salver本身机制实现。</p>
+<font color="#40a800">6. 其他一些优化</font>
+
+<p>通过<strong>数据压缩算法</strong>减低数据传输量，尤其是在服务器重启时，这也是典型的CPU换网络带宽的事例；<strong>全量和增量</strong>数据的选择，全量易于实现，但数据传输效率低；增量效率高，但实现难度大。</p>
+<h2 id="一次远程方法调用—RPC"><a href="#一次远程方法调用—RPC" class="headerlink" title="一次远程方法调用—RPC"></a><font color="#fc6423">一次远程方法调用—RPC</font></h2><p>单机调用和被调用方法在同一个OS上，这个过程变得十分简单，本质是将计数指针指向被掉方法入口。可对于跨机器的方法调用呢？</p>
+<p>为了有个更直白的认识，我写了一个基于Java实现的简单RPC Demo（在我的GitHub上），并且画了下面的示意图。同样，我们看设计一款RPC框架需要考虑哪些因素：</p>
+<img title="RPC示意图" alt="RPC示意图" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/summary_web_service/frame_and_container.png">
+<font color="#40a800">1. 序列化/反序列化</font>
+
+<p>本质上就是对象和二进制数据之间的转换。考虑选用何种序列化/反序列方式，主要基于化通用性（不同语言之间）、性能开销以及虚拟化之后的数据大小等因素。这也从另一个角度阐述了计算机科学里一个常识，没有什么技术是绝对好的。不同的视角（或者理解为不同的应用背景）往往选出两个截然不同的解决方法，而它们都是好的解决方案。</p>
+<font color="#40a800">2. 底层通信</font>
+
+<p>底层通信主要涉及通信协议、服务调用协议以及网络通信。通信协议比如HTTP协议，但根据我的经验，很少有公司在内部将HTTP作为主要协议，主要是头字段占用太多空间（相对于核心传输数据，比如接口参数）以及传输和解析效率低。一般各框架都有自己设计的一套传输协议，当然这过程中还需要考虑原因和与其他RPC的兼容。最后对于上大多数RPC框架均也均没有自己实现一套网络通信模块，比如HSF底层就采用的Netty方案实现同步和异步调用。常用异步调用方式主要包括OneWay、CallBack以及Future模式。比如在我研究过的HSF中就均支持这三种调用协议（本质上是Netty支持），使用方式也很简单，在配置相应beans时修改相应通信类型，并实现相应的方法。业务层感知不出这些差异，基本是同样的代码编写方式（异步可能需要实现相应的方法，比如CallBack模型下需要完成回调方法）。所以到底是选用同步方式还是异步方式，除了需要开发人员除了对业务有很深的了解外，还需要对调用耗时心里有底。</p>
+<font color="#40a800">3. 服务端和客户端初始化</font>
+
+<p>服务端首先需要暴露服务即向软负载中心注册自己的服务，具体就是将服务的元数据分送到软负载中心。软负载中心将这些数据组织成Key—Value结构。而客户端则在需要发起服务时去订阅自己的服务。如果是首次调用，则还将缓存该服务相关信息到本地（提高效率，不用每次去取）。</p>
+<font color="#40a800">4. 客户端远程调取服务端方法</font>
+
+<p>在客户端和服务端都初始化完成后，便可发起一次RPC掉用。为了不用为每个服务生成一个代理类，Java RPC框架一般是采用动态代理的方式动态生成代理对象，并由该对象完成接下来的序列化、网络通信等操作。又是一次完美的封装变化点！在服务提供方反序列化等到请求参数后，通过反射加载得到实际处理的Service类完成计算并将处理结果序列化回网络通信模块，发送给服务订阅方。</p>
+<p><strong>总结：</strong>一个轻量的RPC框架比如HSF一般将一些公共模块做到可配置化，比如支持多种序列化方式、支持常见通信协议以及网络通信方式。这样做的好处就是，RPC框架就只需要关注远程方法调用本身即可，即需要调用什么方法，只需在相应的Spring IOC中配置，至于怎么序列化、怎么网络通信等都交给其他框架去解决如底层通信交给Netty。专注于该专注的点。</p>
+<font color="#40a800"></font>
+
+<h2 id="一次消息的传递—MQ"><a href="#一次消息的传递—MQ" class="headerlink" title="一次消息的传递—MQ"></a><font color="#fc6423">一次消息的传递—MQ</font></h2><p>我将在另一篇文章结合源码详细阐述，这里不再赘述。</p>
+<h2 id="服务治理"><a href="#服务治理" class="headerlink" title="服务治理"></a><font color="#fc6423">服务治理</font></h2><p>系统从集中式变为分布式架构后，不同应用以及底层模块之间的依赖更加复杂。服务化架构必须能够敏锐的洞悉这其中的调用状态以方便的实现各种服务治理。</p>
+<p>服务治理需要提高两个维度的功能，<strong>信息统计和反应</strong>。信息统计是基础，反应是信息统计后的对此采取的措施。服务化架构需要关注的统计信息比如服务质量（出错率、响应时间、趋势等）、服务容量（服务提供的总容量、当前已使用容量、趋势图等）、服务依赖（服务和服务间的依赖关系包括定量的数据信息等）、服务分布（机房分布、机柜分布等）、服务统计（调用次数、出错次数排名、出错率排名等）、服务元数据（服务方法和参数信息等）、服务发布信息（发布人、发布时间等）等。反应则可以根据上述离线或在线的统计信息自动或人工干预做出相应反应，如服务限流降级、路由管理（对服务调用的不同机房、不同机柜、不同机器、不同容器层面做出相应调整）等。</p>
+<p><a href="http://hanchun.tech/" target="_blank" rel="external">欢迎讨论</a></p>
+
       
     </div>
 
@@ -355,6 +459,20 @@
 
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/微服务/" rel="tag"># 微服务</a>
+          
+            <a href="/tags/RPC/" rel="tag"># RPC</a>
+          
+            <a href="/tags/MQ/" rel="tag"># MQ</a>
+          
+            <a href="/tags/Config-Server/" rel="tag"># Config Server</a>
+          
+        </div>
       
 
       
@@ -424,8 +542,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.png"
@@ -456,7 +583,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -492,6 +619,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#单机为什么一定要向多机即集群方向转变"><span class="nav-number">1.</span> <span class="nav-text">单机为什么一定要向多机即集群方向转变</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#框架和应用的关系"><span class="nav-number">2.</span> <span class="nav-text">框架和应用的关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#寻址和路由—软负载中心和配置管理中心"><span class="nav-number">3.</span> <span class="nav-text">寻址和路由—软负载中心和配置管理中心</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一次远程方法调用—RPC"><span class="nav-number">4.</span> <span class="nav-text">一次远程方法调用—RPC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一次消息的传递—MQ"><span class="nav-number">5.</span> <span class="nav-text">一次消息的传递—MQ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务治理"><span class="nav-number">6.</span> <span class="nav-text">服务治理</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
