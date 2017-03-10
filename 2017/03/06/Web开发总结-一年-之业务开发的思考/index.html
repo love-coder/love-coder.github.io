@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="韩春的个人博客" />
+  <meta name="keywords" content="Java,业务开发,领域设计,重构," />
 
 
 
@@ -84,16 +84,24 @@
 
 
 
-<meta name="description" content="一个认真的程序员的成长点滴">
+<meta name="description" content="本篇文章是《Web开发总结(一年)》系列的业务开发思考篇。文中主要是对我在过去一年参与的一些项目开发经历的整理和思考。这个模块是四个模块中写的最纠结的。因为业务开发不同于很多纯技术开发，如判断图像识别算法的好坏，可以在实际应用场景下跑几个不同程度的Case以及理论推导算法复杂度就可以。但业务开发很难有一个可以量化的指标告诉我们，哪些业务设计是好的？但是不是项目开发就没有套路了呢？
+随机应变就是套路">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Web开发总结(一年)之业务开发的思考">
 <meta property="og:url" content="http://yoursite.com/2017/03/06/Web开发总结-一年-之业务开发的思考/index.html">
 <meta property="og:site_name" content="技术博客">
-<meta property="og:description" content="一个认真的程序员的成长点滴">
-<meta property="og:updated_time" content="2017-03-06T13:57:07.139Z">
+<meta property="og:description" content="本篇文章是《Web开发总结(一年)》系列的业务开发思考篇。文中主要是对我在过去一年参与的一些项目开发经历的整理和思考。这个模块是四个模块中写的最纠结的。因为业务开发不同于很多纯技术开发，如判断图像识别算法的好坏，可以在实际应用场景下跑几个不同程度的Case以及理论推导算法复杂度就可以。但业务开发很难有一个可以量化的指标告诉我们，哪些业务设计是好的？但是不是项目开发就没有套路了呢？
+随机应变就是套路">
+<meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/summary_business/domain_important.png">
+<meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/summary_business/sequence.png">
+<meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/summary_business/domain.png">
+<meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/summary_business/class.png">
+<meta property="og:updated_time" content="2017-03-10T13:27:23.342Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Web开发总结(一年)之业务开发的思考">
-<meta name="twitter:description" content="一个认真的程序员的成长点滴">
+<meta name="twitter:description" content="本篇文章是《Web开发总结(一年)》系列的业务开发思考篇。文中主要是对我在过去一年参与的一些项目开发经历的整理和思考。这个模块是四个模块中写的最纠结的。因为业务开发不同于很多纯技术开发，如判断图像识别算法的好坏，可以在实际应用场景下跑几个不同程度的Case以及理论推导算法复杂度就可以。但业务开发很难有一个可以量化的指标告诉我们，哪些业务设计是好的？但是不是项目开发就没有套路了呢？
+随机应变就是套路">
+<meta name="twitter:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/summary_business/domain_important.png">
 
 
 
@@ -300,6 +308,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/阶段总结/" itemprop="url" rel="index">
+                    <span itemprop="name">阶段总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -335,7 +365,61 @@
       
 
       
-        
+        <p>本篇文章是《Web开发总结(一年)》系列的业务开发思考篇。文中主要是对我在过去一年参与的一些项目开发经历的整理和思考。这个模块是四个模块中写的最纠结的。因为业务开发不同于很多纯技术开发，如判断图像识别算法的好坏，可以在实际应用场景下跑几个不同程度的Case以及理论推导算法复杂度就可以。但业务开发很难有一个可以量化的指标告诉我们，哪些业务设计是好的？但是不是项目开发就没有套路了呢？</p>
+<p>随机应变就是套路！而随机应变的前提是对业务整体有足够了解。如果对业务不了解，容易陷入只见树木不见森林的尴尬境地。也就是说，即使对于自己负责的业务模块设计的再精妙，代码写的再优美，也逃不过后期需要被重构的分险。很多时候，重构的成本并不低，甚至比重新开发还要高。所以业务开发者必须首先<strong>对业务整体有感知</strong>，知道该业务的哪些模块是不会轻易变化的，而哪些模块又是容易变化的。对于容易变化的点，要预设足够的设计空间，便于项目迭代过程中的合理开发。同时，对于需要跨团队合作项目，开发者一定要在开发前先和其他团队把职责划分清，避免相互间代码重复、调用关系不清等情况。<br><a id="more"></a></p>
+<h2 id="知晓项目的重要性"><a href="#知晓项目的重要性" class="headerlink" title="知晓项目的重要性"></a><font color="#fc6423">知晓项目的重要性</font></h2><p>对项目到底该投入多大成本，直接取决于这个项目重要性有多大。我曾经把一个和XX合作项目当成重中之重。后来评审时却发现，其实只要能演示就够了，根本不会有用户。也碰到过把某项目的重要性降低（不知道跟甲方签订了二期合同），第一次给客户演示时没有足够重视。对于重要的项目，还需要能够<strong>预判未来的发展</strong>，在设计上预留空间且合理安排开发节奏。比如下图横轴代表重要性维度，数字越大说明该功能对于项目越重要，而纵轴代表该功能紧迫维度，数字越小说明该功能越紧急。比如项目中功能A、B和C中，A和B一样重要但紧迫程度不同，那么设计和开发时就应该优先满足B。而对于功能C而言，虽然不如B功能急迫，但是它的重要性非常高。所以在项目最终设计时，虽然功能C可能不在这一期的开发任务中，但是它必须被重视且优先级最高！</p>
+<img title="重要性示意图" alt="重要性示意图" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/summary_business/domain_important.png">
+<p>用一个我曾经负责的项目为例，某机场巴士售票系统。这个项目当时主管交给我负责之后，让我和甲方聊了个电话，都没面对面见过就开始着手开发。前端、后台甚至数据库都自己完成，期间通过QQ跟甲方交流进度。基本上每个礼拜甲方人员（部门普通职员，也不知道更多信息）都会让演示开发进度。一个月后项目正式部署上线（灰度都没做），发布给当时15万用户使用。虽然上线过程中遇到一些问题，但也都通过各种方式解决了。然后噩梦就开始了！二期开发启动！</p>
+<p>由于在开发过程中压根没想过后期还要开发，所以代码几乎没有考虑可扩展性。当甲方告诉我二期需要增加通勤员工充值功能（咦！还分次卡、月卡）、需要外接保险、需要增加支付手段等。当时的内心是奔溃的！由于工期赶，只得那半个月没日没夜干活，自己写，自己测。最后虽然项目发布，主管和甲方都很满意，但是我的内心很复杂。<strong>代码组织很混乱</strong>，比如通勤充值，几乎Copy原来普通乘客查询和交易模块代码（当时业务写在Controller中且又增加了一些新的逻辑，没法复用）。再比如会在极端网络情况下，乘客或通勤人员填写订单提交时出现有异常订单（支付成功，但票状态不更新）。当然最后还是被我通过各种手段解决了，但根本问题并没有解决。</p>
+<p><strong>真的没办法了吗？</strong></p>
+<p>在进入具体踩坑分析之前，我们来分析开发中常见四个对象之间的关系。阐述这部分之前，我想再次强调：<strong>这种划分不是必须的，甚至在某些场景下是完全错误的！</strong>之所以用一些篇幅阐述这个事情，是因为这是一次绝佳的机会来思考什么样的设计可能是不错的设计？不仅仅是对于业务，同样适用底层技术甚至方方面面。</p>
+<p><strong>XxxVO（View Object）：</strong>视图对象。包括我在内的很多同学第一次看到这个概念一点不奇怪，就跟第一次看到MVC设计时一样，觉得就应该是这样。真的是天生吗？不是！这背后蕴含两个很重要的设计思想，封装和解耦变化点。还记得我曾经在《Web开发总结(一年)》系列概述篇中举的那个例子吗？视图本质上也就是一个文本，只是碰巧浏览器认识它而已。要是愿意，我们甚至可以在代码中生成这段代码，为什么不这么做？为什么要抽象出视图对象这个概念？因为视图易变，那么就不可能在每次直接去改代码，效率太低还容易出错。理想的方式是直接把视图模块单独出来，把视图中不变的东西单独出来，把最易变化的东西抽象成视图对向模型。是不是又理解了为什么会出现JSP、Freemarker、Velocity等这些模板技术了呢？</p>
+<p><strong>XxxDTO（Data Transfer Object，XxxForm）：</strong>数据传输对象。我最初看到这个概念是在一个项目中看到一个xxx.xxx.xxx.webform的package下很多XxxForm，当时很疑惑。后来得知，这个里面的模型是用来统一处理表单的。现在看来，这就有点DTO的感觉，即处理页面层和领域层传输的对象；</p>
+<p><strong>XxxDO（Domain Object）：</strong>领域对象。现实环境中对业务抽象出来的业务实体，后面会有详细说明；</p>
+<p><strong>XxxPO（Pressient Object，XxxEntity）：</strong>持久化对象。它是和数据库（一般为关系型数据库）中的数据结构建立的映射关系对象。一般可以理解成，PO中的每个字段总能在数据库某张表上某字段对应。</p>
+<p><strong>它们之间的关系</strong></p>
+<font color="#40a800">VO和DTO</font>
+
+<p>很多时候，我们甚至在项目中看不到VO的影子，是因为现在很多页面脚本语言可以实现数据转换，比如JSTL标签。但是作为开发人员还是应该知晓这层关系。比如很多时候，有同学习惯在页面组装模型，本质上就是处理几个DTO最终形成一个页面。</p>
+<font color="#40a800">DO和DTO</font>
+
+<p>这两个概念在一般的项目中都可以看到，可能命名不同，但完成的功能是相同的。我曾经在阿里参与的一个项目中看到，<strong>为了解决绝大数DO和DTO相同的问题，又不想写太多低效代码，专门引入相关的Jar来做这层复制。</strong>可见，哪怕这层工作是多余的，但也是必须的。而且，很多时候区分DO和DTO是必须的，比如交易模型的DO中有第三方交易单号的概念，但是在实际的视图层是不需要显示的。如果不区分出来，相应字段设为空等方式终归不优美。</p>
+<font color="#40a800">DO和PO</font>
+
+<p>在我前期参与的项目中DO和PO并没有区分，造成了很多不便。比如数据库字段确认好后，用于业务处理的模型也就随之确定。在这种情况下，就很难解耦各业务模型之间的关系。因为数据库的设计肯定不能完全满足业务特性，还必须考虑到一些所谓的范式设计（尽管现在已经不强调，尤其是在互联网行业，高范式一般意味着高耦合）和查询效率等。本质上就是DO和PO也是多对多的关系。</p>
+<h2 id="合适的设计"><a href="#合适的设计" class="headerlink" title="合适的设计"></a><font color="#fc6423">合适的设计</font></h2><p>站在今天的角度看，当初是由于我并没有和业务进行过深入交流，导致对业务理解不深。我一度甚至以为只是开发一个卖票的程序，没想过卖票竟然也有那么多坑。借此机会，我把原来写的一篇反思该项目的文章做了精简，分享出来。<strong>文章直接从主事件流开始，然后到领域模型，最后举其中一个接口设计。看看如何通过这一层层的分析化解上面遇到的问题。</strong></p>
+<font color="#40a800">主事件流</font>
+
+<p>站在用户侧考虑，整个交易过程涉及三个参与方（实际更多，比如三方保险等）。交易的正常精简流程（异常情况等暂时不考虑）如下：</p>
+<ol>
+<li>用户从浏览器输入出发日期、地点等参数后，系统去中心票仓查询相应班次（可能涉及多个票仓）；</li>
+<li>用户根据返回的班次信息，填写订单；</li>
+<li>系统将用户填写的订单提交到中心票仓，进行锁票操作；</li>
+<li>索票操作成功后，系统将自动向第三方支付（微信、支付宝、银联等）发起预支付操作；</li>
+<li>预支付操作成功后，系统将发起正式支付操作提示用户输入账户、密码等信息；</li>
+<li>支付完成后，将再次向中心票仓提交订单（票实际状态由中心票仓管理），并更新本地状态；</li>
+<li>跳转到成功页面，整个下单过程结束。</li>
+</ol>
+<img title="主事件流" alt="主事件流" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/summary_business/sequence.png">
+<p>如果仔细观察下，不然发现，第3—6步是由系统自动完成的。中间的调用关系复杂，涉及和多个系统交互。<strong>一个环节出现错误将导致出现异常订单，所以这也是系统优化的重点和难点。</strong>可惜当时并没有意识到这个问题，导致后来有几次曾半夜守着服务器，电话联系异常订单的用户。这个过程中也学到了很多沟通的技巧，涉及甲方、媒体以及用户，也是一笔经验的沉淀。</p>
+<font color="#40a800">梳理领域模型</font>
+
+<p>通过和业务的交流以及我们分析相关领域的一般处理思路，我发现可以用下面四个核心领域对象来表述该业务。篇幅原因，这里直接给出对业务领域建模后的图（部分）。</p>
+<img title="领域模型" alt="领域模型" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/summary_business/domain.png">
+<p>我简要阐述一个在开发中遇到的坑。注意到Ticket域中有个<strong>type属性</strong>，这其实在项目一期中是不存在的。因为我当初压根没想到，票的种类还要进一步划分，如普通乘客票、员工通勤票（儿童票可以在订单页面选择，而通勤走专门的交易通道且不归我们管，也就是只得完全遵从别人的API）等。有了这个type属性后，很多事情就变得好处理很多。比如，得到用户登录信息后，就可以根据用户账号自动出现票的类型选择按钮，选择是正常票还是通勤票，以此进入不同的购票流程。更重要的是，得益于对订单域的抽象，只需要修改Order域中type属性，通勤充值可以完全不修改直接复用这套模型设计。同样的设计还被运用在了支持更多的三方支付接口上如Transaction域中的type属性。这里thirdTransactionId在一期中也是没有的。后来财务说，必须加上，否则不好对账尤其是在发生退款业务的时候。</p>
+<p>有了以上的分析后，进入到具体的类设计。这里举一个简单的接口设计，说明接口对于解耦是多么的重要。TicketService用来处理和票相关操作，比如根据票的类型去不同的票仓获取票的详细信息如班次、座位号、价格等。早期西安有一个票仓，后来业务扩展，比如系统又要对接北京的票务中心。此时，只需要实现一个BeijingTicketServiceImpl类，并在IOC中注入即可。其他一行代码不要改！</p>
+<img title="接口设计" alt="接口设计" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/summary_business/class.png">
+<font color="#40a800">异常订单的出现</font>
+
+<p>Spring MVC的Controller设计默认是<strong>单类模式</strong>，也就是说在默认场景下XxxController只会new出一个对象（如果想用类属性，则需要考虑线程安全性）。如果XxxController被掉用的非常频繁且不加特殊处理，对于每次有请求过来，都发起一个专门的线程去处理，后果很严重（频繁的线程切换，线程安全的容器使用会影响效率）。还有一个更重要的问题是，从锁票到最终成功出票这个过程非常复杂，如果同步方式必然延迟严重甚至抛IO异常。最后我是通过管理定量的线程池，超过最大值的就进入队列等待。此外，对于调用失败，自动重试（如果依赖的其他服务挂掉，必定会导致我们的系统大量重试，严重影响交易，所以只重试1次）。再次失败，则写入数据库中，并详细记录失败原因。系统后台运行固定线程，每隔一定时间自动读取异常表，再次发起交易，再次失败则请求人工干预。对于异常订单，合适的时候一定让用户知晓（网页展示“若您订单状态为待提交，请X分钟后再次查看！”）。飞猪、携程等则是交易后会有专门出票短信。这个一定要有，不然可能造成现场失控（钱给了，票“假”的）！多么痛的觉悟！这些过往经历也时刻提醒我，<strong>对手中的技术保持一颗敬畏之心</strong>。</p>
+<font color="#40a800">为什么是这个方案？</font>
+
+<p>有人会问，既然提交订单这一步这么复杂，为什么不进行异步解耦，比如利用消息中间件？当然是好的设计，但是考虑到当时背景（技术沉淀不够，成本预算不足），不太可能为了提交订单这一步专门去搭建一个中间件服务。这是我这一年中我学到的一个很重要的经验，<strong>基于环境做最合适的选择</strong>。</p>
+<p>最后的技术实现和业务设计是两回事，可能花了很多时间设计但是最终实现的时候做了一些调整。但这并不能否定设计的重要性。<strong>设计会强迫开发人员对业务进行思考，为后期项目扩展预留空间。</strong></p>
+<h2 id="编写相关文档"><a href="#编写相关文档" class="headerlink" title="编写相关文档"></a><font color="#fc6423">编写相关文档</font></h2><p>面对面沟通的成本毕竟太高，而且不易进行二次传播，而通过相关文档的方式可以极大降低沟通成本（地理位置因素、二次传播因素等）。当然这句话是有前提的，那就是编写的文档值得读！这很容易走入两个极端，为了编写文档而编写文档或者是一点文档都没有！毕竟文档不能在机器上运行，所以文档的本质属性是<strong>交流媒介</strong>。如果架构设计合理、代码规范那么没有必要写过多的注释和设计说明！好代码就是简短且各类命名直白。理想的情况是通过观察类设计图，能知道整个系统设计思路；通过看每个类名以及它的属性和方法的命名，就知道这个类有什么用，且具体承担了哪些功能。<strong>设计才是最好的注释！</strong></p>
+<p>但是，必要的文档还是必须得有！比如前期的设计文档如需求文档、UI交互文档、关键类设计等。用一句话来总结的话就是，合适的时候编写合适的文档！在我看来文档还有一个容易被忽视的作用，就是强迫编写文档的同学进行<strong>层次化思考</strong>。“想明白”、“说明白”跟“写明白”毕竟还是不同的。</p>
+<p><a href="http://hanchun.tech/" target="_blank" rel="external">欢迎讨论</a></p>
+
       
     </div>
 
@@ -355,6 +439,18 @@
 
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/业务开发/" rel="tag"># 业务开发</a>
+          
+            <a href="/tags/领域设计/" rel="tag"># 领域设计</a>
+          
+            <a href="/tags/重构/" rel="tag"># 重构</a>
+          
+        </div>
       
 
       
@@ -424,8 +520,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.png"
@@ -456,7 +561,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">21</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -492,6 +597,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#知晓项目的重要性"><span class="nav-number">1.</span> <span class="nav-text">知晓项目的重要性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合适的设计"><span class="nav-number">2.</span> <span class="nav-text">合适的设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写相关文档"><span class="nav-number">3.</span> <span class="nav-text">编写相关文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>
