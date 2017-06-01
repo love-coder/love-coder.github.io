@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Maven,Tomcat,Linux,Shell," />
+  <meta name="keywords" content="Linux,Maven,Tomcat,Shell," />
 
 
 
@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/05/30/Maven实现Tomcat热部署/index.html">
 <meta property="og:site_name" content="技术博客">
 <meta property="og:description" content="最近由于重装系统的关系，需要重新安装开发环境，这倒也是一次很好的机会，再次认识平时经常使用，但却没注意过的一些开发工具如Maven。我一般不直接使用IDEA集成的一些插件，因为有时候出错提示的信息让人摸不着头脑，不利于快速排错。比如最近一次更新完IDEA版本后，不管怎么配置Maven，其中一个项目运行mvn clean install tomcat7:deploy总是报找不到插件的错误，但直接在项">
-<meta property="og:updated_time" content="2017-06-01T15:16:09.073Z">
+<meta property="og:updated_time" content="2017-06-01T15:22:40.298Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Maven实现Tomcat热部署">
 <meta name="twitter:description" content="最近由于重装系统的关系，需要重新安装开发环境，这倒也是一次很好的机会，再次认识平时经常使用，但却没注意过的一些开发工具如Maven。我一般不直接使用IDEA集成的一些插件，因为有时候出错提示的信息让人摸不着头脑，不利于快速排错。比如最近一次更新完IDEA版本后，不管怎么配置Maven，其中一个项目运行mvn clean install tomcat7:deploy总是报找不到插件的错误，但直接在项">
@@ -403,7 +403,10 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># /usr/sbin/adduser -d /opt/test_ftp -g ftp -s /sbin/nologin -G root hanchun_ftp</span></div><div class="line"><span class="comment"># passwd hanchun_ftp</span></div><div class="line">Changing password <span class="keyword">for</span> user hanchun_ftp.</div><div class="line">New password: </div><div class="line">Retype new password: </div><div class="line">passwd: all authentication tokens updated successfully.</div></pre></td></tr></table></figure>
 <p><strong>重启ftp</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># /etc/init.d/vsftpd restart</span></div></pre></td></tr></table></figure>
-<font color="#40a800">2.执行过程中一些问题</font><br>若在脚本运行过程中出现ftp: connect: No route to host 、550 Failed to change directory或cannot create等问题，则需要参照Linux规则配置相应防火墙和sftp账号权限。权限管理是Linux系统的最重要的功能之一，使用得当可以极大提高服务器的安全级别。<br><br><font color="#40a800">3.服务器防火墙配置</font>
+<font color="#40a800">2.执行过程中一些问题</font>
+
+<p>若在脚本运行过程中出现ftp: connect: No route to host 、550 Failed to change directory或cannot create等问题，则需要参照Linux规则配置相应防火墙和sftp账号权限。权限管理是Linux系统的最重要的功能之一，使用得当可以极大提高服务器的安全级别。</p>
+<font color="#40a800">3.服务器防火墙配置</font>
 
 <p>实际配置要复杂的多得多，这里只是为了快速验证效果，而直接将防火墙关闭，实际环境中不可如此操作。</p>
 <p>查看防火墙 </p>
@@ -434,11 +437,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
             <a href="/tags/Maven/" rel="tag"># Maven</a>
           
             <a href="/tags/Tomcat/" rel="tag"># Tomcat</a>
-          
-            <a href="/tags/Linux/" rel="tag"># Linux</a>
           
             <a href="/tags/Shell/" rel="tag"># Shell</a>
           
