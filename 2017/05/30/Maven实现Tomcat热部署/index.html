@@ -1,0 +1,787 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Maven,Tomcat,Linux,Shell," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="最近由于重装系统的关系，需要重新安装开发环境，这倒也是一次很好的机会，再次认识平时经常使用，但却没注意过的一些开发工具如Maven。我一般不直接使用IDEA集成的一些插件，因为有时候出错提示的信息让人摸不着头脑，不利于快速排错。比如最近一次更新完IDEA版本后，不管怎么配置Maven，其中一个项目运行mvn clean install tomcat7:deploy总是报找不到插件的错误，但直接在项">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Maven实现Tomcat热部署">
+<meta property="og:url" content="http://yoursite.com/2017/05/30/Maven实现Tomcat热部署/index.html">
+<meta property="og:site_name" content="技术博客">
+<meta property="og:description" content="最近由于重装系统的关系，需要重新安装开发环境，这倒也是一次很好的机会，再次认识平时经常使用，但却没注意过的一些开发工具如Maven。我一般不直接使用IDEA集成的一些插件，因为有时候出错提示的信息让人摸不着头脑，不利于快速排错。比如最近一次更新完IDEA版本后，不管怎么配置Maven，其中一个项目运行mvn clean install tomcat7:deploy总是报找不到插件的错误，但直接在项">
+<meta property="og:updated_time" content="2017-06-01T15:16:09.073Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Maven实现Tomcat热部署">
+<meta name="twitter:description" content="最近由于重装系统的关系，需要重新安装开发环境，这倒也是一次很好的机会，再次认识平时经常使用，但却没注意过的一些开发工具如Maven。我一般不直接使用IDEA集成的一些插件，因为有时候出错提示的信息让人摸不着头脑，不利于快速排错。比如最近一次更新完IDEA版本后，不管怎么配置Maven，其中一个项目运行mvn clean install tomcat7:deploy总是报找不到插件的错误，但直接在项">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/30/Maven实现Tomcat热部署/"/>
+
+
+
+
+
+  <title> Maven实现Tomcat热部署 | 技术博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">技术博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle"></p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/30/Maven实现Tomcat热部署/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="韩 春">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="技术博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="技术博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Maven实现Tomcat热部署
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-30T22:20:17+08:00">
+                2017-05-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/工具/" itemprop="url" rel="index">
+                    <span itemprop="name">工具</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/05/30/Maven实现Tomcat热部署/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/30/Maven实现Tomcat热部署/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近由于重装系统的关系，需要重新安装开发环境，这倒也是一次很好的机会，再次认识平时经常使用，但却没注意过的一些开发工具如Maven。我一般不直接使用IDEA集成的一些插件，因为有时候<strong>出错提示的信息让人摸不着头脑，不利于快速排错</strong>。比如最近一次更新完IDEA版本后，不管怎么配置Maven，其中一个项目运行mvn clean install tomcat7:deploy总是报找不到插件的错误，但直接在项目上执行，就完全正常。其实很多时候，习惯了命令行，效率并不比直接使用这些集成插件低。</p>
+<p>这篇文章，总结了我在使用Maven时经常用的一些操作指令以及介绍模块化和热部署的具体实现方式，最后利用sftp简单写一个上传war包的脚本。其他的一些细节，个人觉得看一个完整的项目，仔细研究下各模块间的配置关系就可以基本掌握，比如处理多模块jar相互依赖的一些技巧等。毕竟Maven只是管理工具，能满足日常开发需求即可，底层实现细节对于一般开发而言，可能没那么重要<strong>（仅仅个人觉得）</strong>。</p>
+<a id="more"></a>
+<h2 id="配置仓库"><a href="#配置仓库" class="headerlink" title="配置仓库"></a><font color="#fc6423">配置仓库</font></h2><p>众所周知的原因，Maven默认仓库几乎不能使用，一般开发者需要自行配置国内仓库，其他比如Node.js的npm源，CentOS的yum源等也均可做类似配置。具体做法是在setting.xml中增加下面内容配置，该文件存在于两个地方，一是在本地仓库.m/目录下，另外一个在安装文件中的conf/目录下，其中前者是用户自定义的配置且优先级高于后者。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;mirror&gt;</div><div class="line">	&lt;id&gt;alimaven&lt;/id&gt;</div><div class="line">    &lt;name&gt;aliyun maven&lt;/name&gt;</div><div class="line">    &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;</div><div class="line">    &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;        </div><div class="line">&lt;/mirror&gt;</div></pre></td></tr></table></figure>
+<h2 id="热部署实现"><a href="#热部署实现" class="headerlink" title="热部署实现"></a><font color="#fc6423">热部署实现</font></h2><p>热部署本质上就是把本地的项目打包成war包，然后上传到服务器，最后在Web容器如Tomcat中部署，则相应的部署过程也可分为三步分别是配置本地Maven、配置Linux权限以及配置Tomcat权限。<strong>归根到底，也就是对权限配置</strong>。从本地打包、到传输到远程服务器以及最后远程执行脚本，比如在本文的最后，我们简单实现了一个将本地指定目录中的war包，远程发送到服务器中的Tomcat指定目录中。当然实际情况，需要考虑安全和效率等因素，实现难度要大得多，但本质是一样的。</p>
+<font color="#40a800">配置本地Maven</font>
+
+<p>在setting.xml中<servers>标签中增加账户和相应密码：</servers></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;server&gt;</div><div class="line">	&lt;id&gt;tomcat8&lt;/id&gt;</div><div class="line">	&lt;username&gt;hanchun&lt;/username&gt;</div><div class="line">	&lt;password&gt;123456&lt;/password&gt;</div><div class="line">&lt;/server&gt;</div></pre></td></tr></table></figure>
+<p>在项目pom.xml中增加插件，这里tomcat7-maven-plugin基本可以支持到tomcat8。个人觉得应该很少有公司直接使用这些开源的插件，应该是基于自家安全要求，定制开发相关插件。这部分工作，核心部分不难，可以直接使用tomcat开放出相应的管理接口（用户直接输入192.168.206.129:8080/manager/html能看到其可视化的效果，比如提供该容器目前运行那些项目以及它们的状态，重启指定项目等），或者直接基于shell写脚本，比如文后我们自己简单实现了上传war包的脚本。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;plugin&gt;</div><div class="line">	&lt;groupId&gt;org.apache.tomcat.maven&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;tomcat7-maven-plugin&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;<span class="variable">$&#123;tomcat7-maven-plugin.version&#125;</span>&lt;/version&gt;</div><div class="line">	&lt;configuration&gt;</div><div class="line">		&lt;server&gt;tomcat8&lt;/server&gt;</div><div class="line">        &lt;port&gt;80&lt;/port&gt;</div><div class="line">        &lt;path&gt;/<span class="variable">$&#123;project.artifactId&#125;</span>&lt;/path&gt;</div><div class="line">        &lt;url&gt;http://192.168.206.129:80/manager/text&lt;/url&gt;</div><div class="line">        &lt;username&gt;hanchun&lt;/username&gt;</div><div class="line">        &lt;password&gt;123456&lt;/password&gt;</div><div class="line">	&lt;/configuration&gt;</div><div class="line">&lt;/plugin&gt;</div></pre></td></tr></table></figure>
+<font color="#40a800">配置Tomcat</font>
+
+<p>在conf配置目录下tomcat-users.xml中增加以下配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;Context antiResourceLocking=<span class="string">"false"</span> privileged=<span class="string">"true"</span>&gt;</div><div class="line">	&lt;Valve className=<span class="string">"org.apache.catalina.valves.RemoteAddrValve"</span> allow=<span class="string">"192\.\d+\.\d+\.\d+|::10:0:0:0:0:0:0:1"</span>/&gt;</div><div class="line">&lt;/Context&gt;</div></pre></td></tr></table></figure>
+<h2 id="shell脚本实现部署"><a href="#shell脚本实现部署" class="headerlink" title="shell脚本实现部署"></a><font color="#fc6423">shell脚本实现部署</font></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"><span class="comment">#=====================================================</span></div><div class="line"><span class="comment">#功能：将本地war发布到服务器上，并自动解压部署</span></div><div class="line"><span class="comment">#</span></div><div class="line"><span class="comment">#作者：韩春</span></div><div class="line"><span class="comment">#日期：2017-05-14</span></div><div class="line"><span class="comment">#=====================================================</span></div><div class="line"></div><div class="line"><span class="comment">#SFTP配置信息</span></div><div class="line"><span class="comment">#用户名</span></div><div class="line">USER=hanchun_ftp</div><div class="line"><span class="comment">#密码</span></div><div class="line">PASSWORD=lovecode</div><div class="line"><span class="comment">#本地上传目录</span></div><div class="line">SRCDIR=/tmp/<span class="built_in">test</span>-ftp/war</div><div class="line"><span class="comment">#tomcat部署目录</span></div><div class="line">DESDIR=/usr/<span class="built_in">local</span>/tomcat8/webapps</div><div class="line"><span class="comment">#服务器IP</span></div><div class="line">IP=192.168.206.129</div><div class="line"></div><div class="line"><span class="comment">#######上传war包##################################</span></div><div class="line"><span class="comment">#获取文件</span></div><div class="line"><span class="built_in">cd</span> <span class="variable">$&#123;SRCDIR&#125;</span> ; </div><div class="line">FILES=`ls`</div><div class="line"></div><div class="line"><span class="keyword">for</span> FILE <span class="keyword">in</span> <span class="variable">$&#123;FILES&#125;</span></div><div class="line"><span class="keyword">do</span></div><div class="line">    <span class="built_in">echo</span> <span class="variable">$&#123;FILE&#125;</span></div><div class="line">    <span class="comment">#发送文件(关键）   </span></div><div class="line">    ftp -niv &lt;&lt;- EOF  </div><div class="line">    open <span class="variable">$&#123;IP&#125;</span>  </div><div class="line">    user <span class="variable">$&#123;USER&#125;</span> <span class="variable">$&#123;PASSWORD&#125;</span>  </div><div class="line">    <span class="built_in">cd</span> <span class="variable">$&#123;DESDIR&#125;</span></div><div class="line">    put <span class="variable">$&#123;FILE&#125;</span> </div><div class="line"><span class="built_in">bye</span>  </div><div class="line">EOF</div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure>
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a><font color="#fc6423">常用命令</font></h2><font color="#40a800">创建项目</font>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># mvn genarate</span></div></pre></td></tr></table></figure>
+<font color="#40a800">编译源代码</font>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># mvn compile</span></div></pre></td></tr></table></figure>
+<font color="#40a800">发布jar到本地仓库</font>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># mvn install</span></div></pre></td></tr></table></figure>
+<font color="#40a800">运行测试</font>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># mvn test</span></div></pre></td></tr></table></figure>
+<font color="#40a800">构建项目，一般输出到target目录下</font>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># mvn package</span></div><div class="line"><span class="comment"># mvn -Dtest package //只打包不测试，或mvn package -skipping test</span></div></pre></td></tr></table></figure>
+<font color="#40a800">清理生成的文件</font>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># mvn clean</span></div></pre></td></tr></table></figure>
+<font color="#40a800" 启动、停止和部署web应用<="" font="">
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># mvn tomcat:start</span></div><div class="line"><span class="comment"># mvn tomcat:stop</span></div><div class="line"><span class="comment"># mvn tomcat:deploy</span></div></pre></td></tr></table></figure>
+<font color="#40a800">打印依赖树</font>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># mvn dependency:tree</span></div></pre></td></tr></table></figure>
+<h2 id="一些补充"><a href="#一些补充" class="headerlink" title="一些补充"></a><font color="#fc6423">一些补充</font></h2><font color="#40a800">1.添加ftp账户</font>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># /usr/sbin/adduser -d /opt/test_ftp -g ftp -s /sbin/nologin -G root hanchun_ftp</span></div><div class="line"><span class="comment"># passwd hanchun_ftp</span></div><div class="line">Changing password <span class="keyword">for</span> user hanchun_ftp.</div><div class="line">New password: </div><div class="line">Retype new password: </div><div class="line">passwd: all authentication tokens updated successfully.</div></pre></td></tr></table></figure>
+<p><strong>重启ftp</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># /etc/init.d/vsftpd restart</span></div></pre></td></tr></table></figure>
+<font color="#40a800">2.执行过程中一些问题</font><br>若在脚本运行过程中出现ftp: connect: No route to host 、550 Failed to change directory或cannot create等问题，则需要参照Linux规则配置相应防火墙和sftp账号权限。权限管理是Linux系统的最重要的功能之一，使用得当可以极大提高服务器的安全级别。<br><br><font color="#40a800">3.服务器防火墙配置</font>
+
+<p>实际配置要复杂的多得多，这里只是为了快速验证效果，而直接将防火墙关闭，实际环境中不可如此操作。</p>
+<p>查看防火墙 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># firewall-cmd -state</span></div></pre></td></tr></table></figure>
+<p>关闭防火墙（重启后失效） </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># systemctl stop firewalld.service</span></div></pre></td></tr></table></figure>
+<p><a href="http://hanchun.tech/" target="_blank" rel="external">欢迎讨论</a></p>
+</font>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Maven/" rel="tag"># Maven</a>
+          
+            <a href="/tags/Tomcat/" rel="tag"># Tomcat</a>
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+            <a href="/tags/Shell/" rel="tag"># Shell</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/19/从模拟并发谈起-上篇/" rel="next" title="从模拟并发谈起(上篇)">
+                <i class="fa fa-chevron-left"></i> 从模拟并发谈起(上篇)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/05/30/Maven实现Tomcat热部署/"
+           data-title="Maven实现Tomcat热部署" data-url="http://yoursite.com/2017/05/30/Maven实现Tomcat热部署/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="韩 春" />
+          <p class="site-author-name" itemprop="name">韩 春</p>
+          <p class="site-description motion-element" itemprop="description">一个认真的程序员的成长点滴</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/love-coder" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置仓库"><span class="nav-number">1.</span> <span class="nav-text">配置仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#热部署实现"><span class="nav-number">2.</span> <span class="nav-text">热部署实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell脚本实现部署"><span class="nav-number">3.</span> <span class="nav-text">shell脚本实现部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用命令"><span class="nav-number">4.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些补充"><span class="nav-number">5.</span> <span class="nav-text">一些补充</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">韩 春</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"hanchun"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+
+</body>
+</html>

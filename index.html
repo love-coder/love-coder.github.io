@@ -251,7 +251,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/19/Maven实现Tomcat热部署/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/30/Maven实现Tomcat热部署/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="韩 春">
@@ -276,7 +276,7 @@
             
               
                 
-                <a class="post-title-link" href="/2017/04/19/Maven实现Tomcat热部署/" itemprop="url">
+                <a class="post-title-link" href="/2017/05/30/Maven实现Tomcat热部署/" itemprop="url">
                   Maven实现Tomcat热部署
                 </a>
               
@@ -293,8 +293,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-04-19T22:20:17+08:00">
-                2017-04-19
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-30T22:20:17+08:00">
+                2017-05-30
               </time>
             
 
@@ -334,8 +334,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/04/19/Maven实现Tomcat热部署/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/19/Maven实现Tomcat热部署/" itemprop="commentCount"></span>
+                <a href="/2017/05/30/Maven实现Tomcat热部署/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/05/30/Maven实现Tomcat热部署/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -362,10 +362,11 @@
 
       
         
-          <p>最近由于重装系统的关系，需要重新安装开发环境。这倒也是一次很好的机会，再次认识平时经常使用，但却没注意的一些开发工具，比如Maven。我一般不直接使用IDEA集成的一些插件，或者更趋向于在使用一段的时间命令行后，再回头使用这些插件。因为有时IDEA一个简单的按钮，其背后可能包含好几条操作指令。一旦运行出错，如果不了解背后运行机制，则不容易快速定位问题。所以这篇文章，<strong>总结了我在使用Maven时经常用的一些操作指令，以及介绍模块化和热部署的具体实现方式，最后利用sftp简单写一个上传war包的脚本</strong>。<br>
+          <p>最近由于重装系统的关系，需要重新安装开发环境，这倒也是一次很好的机会，再次认识平时经常使用，但却没注意过的一些开发工具如Maven。我一般不直接使用IDEA集成的一些插件，因为有时候<strong>出错提示的信息让人摸不着头脑，不利于快速排错</strong>。比如最近一次更新完IDEA版本后，不管怎么配置Maven，其中一个项目运行mvn clean install tomcat7:deploy总是报找不到插件的错误，但直接在项目上执行，就完全正常。其实很多时候，习惯了命令行，效率并不比直接使用这些集成插件低。</p>
+<p>这篇文章，总结了我在使用Maven时经常用的一些操作指令以及介绍模块化和热部署的具体实现方式，最后利用sftp简单写一个上传war包的脚本。其他的一些细节，个人觉得看一个完整的项目，仔细研究下各模块间的配置关系就可以基本掌握，比如处理多模块jar相互依赖的一些技巧等。毕竟Maven只是管理工具，能满足日常开发需求即可，底层实现细节对于一般开发而言，可能没那么重要<strong>（仅仅个人觉得）</strong>。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2017/04/19/Maven实现Tomcat热部署/#more" rel="contents">
+            <a class="btn" href="/2017/05/30/Maven实现Tomcat热部署/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
