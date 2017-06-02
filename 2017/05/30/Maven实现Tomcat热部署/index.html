@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Linux,Maven,Tomcat,Shell," />
+  <meta name="keywords" content="Maven,Tomcat,Linux,Shell," />
 
 
 
@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/05/30/Maven实现Tomcat热部署/index.html">
 <meta property="og:site_name" content="技术博客">
 <meta property="og:description" content="最近由于重装系统的关系，需要重新安装开发环境，这倒也是一次很好的机会，再次认识平时经常使用，但却没注意过的一些开发工具如Maven。我一般不直接使用IDEA集成的一些插件，因为有时候出错提示的信息让人摸不着头脑，不利于快速排错。比如最近一次更新完IDEA版本后，不管怎么配置Maven，其中一个项目运行mvn clean install tomcat7:deploy总是报找不到插件的错误，但直接在项">
-<meta property="og:updated_time" content="2017-06-01T15:30:02.561Z">
+<meta property="og:updated_time" content="2017-06-02T09:04:21.620Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Maven实现Tomcat热部署">
 <meta name="twitter:description" content="最近由于重装系统的关系，需要重新安装开发环境，这倒也是一次很好的机会，再次认识平时经常使用，但却没注意过的一些开发工具如Maven。我一般不直接使用IDEA集成的一些插件，因为有时候出错提示的信息让人摸不着头脑，不利于快速排错。比如最近一次更新完IDEA版本后，不管怎么配置Maven，其中一个项目运行mvn clean install tomcat7:deploy总是报找不到插件的错误，但直接在项">
@@ -357,18 +357,17 @@
       
 
       
-        <p>最近由于重装系统的关系，需要重新安装开发环境，这倒也是一次很好的机会，再次认识平时经常使用，但却没注意过的一些开发工具如Maven。我一般不直接使用IDEA集成的一些插件，因为有时候<strong>出错提示的信息让人摸不着头脑，不利于快速排错</strong>。比如最近一次更新完IDEA版本后，不管怎么配置Maven，其中一个项目运行mvn clean install tomcat7:deploy总是报找不到插件的错误，但直接在项目上执行，就完全正常。其实很多时候，习惯了命令行，效率并不比直接使用这些集成插件低。</p>
+        <p>最近由于重装系统的关系，需要重新安装开发环境，这倒也是一次很好的机会，再次认识平时经常使用，但却没注意过的一些开发工具如Maven。我一般不直接使用IDEA集成的一些插件，因为有时候<strong>出错提示的信息让人摸不着头脑，不利于快速排错</strong>。比如最近一次更新完IDEA版本后，不管怎么配置Maven，其中一个项目运行mvn clean install tomcat7:deploy总是报找不到插件的错误，但直接在项目上执行，就完全正常。其实很多时候，习惯了命令行，效率并不比直接使用这些集成插件低。<br><a id="more"></a></p>
 <p>这篇文章，总结了我在使用Maven时经常用的一些操作指令以及介绍模块化和热部署的具体实现方式，最后利用sftp简单写一个上传war包的脚本。其他的一些细节，个人觉得看一个完整的项目，仔细研究下各模块间的配置关系就可以基本掌握，比如处理多模块jar相互依赖的一些技巧等。毕竟Maven只是管理工具，能满足日常开发需求即可，底层实现细节对于一般开发而言，可能没那么重要<strong>（仅仅个人觉得）</strong>。</p>
-<a id="more"></a>
 <h2 id="配置仓库"><a href="#配置仓库" class="headerlink" title="配置仓库"></a><font color="#fc6423">配置仓库</font></h2><p>众所周知的原因，Maven默认仓库几乎不能使用，一般开发者需要自行配置国内仓库，其他比如Node.js的npm源，CentOS的yum源等也均可做类似配置。具体做法是在setting.xml中增加下面内容配置，该文件存在于两个地方，一是在本地仓库.m/目录下，另外一个在安装文件中的conf/目录下，其中前者是用户自定义的配置且优先级高于后者。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;mirror&gt;</div><div class="line">	&lt;id&gt;alimaven&lt;/id&gt;</div><div class="line">    &lt;name&gt;aliyun maven&lt;/name&gt;</div><div class="line">    &lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;</div><div class="line">    &lt;mirrorOf&gt;central&lt;/mirrorOf&gt;        </div><div class="line">&lt;/mirror&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;mirror&gt;</div><div class="line">	&lt;id&gt;alimaven&lt;/id&gt;</div><div class="line">    	&lt;name&gt;aliyun maven&lt;/name&gt;</div><div class="line">   	&lt;url&gt;http://maven.aliyun.com/nexus/content/groups/public/&lt;/url&gt;</div><div class="line">    	&lt;mirrorOf&gt;central&lt;/mirrorOf&gt;        </div><div class="line">&lt;/mirror&gt;</div></pre></td></tr></table></figure>
 <h2 id="热部署实现"><a href="#热部署实现" class="headerlink" title="热部署实现"></a><font color="#fc6423">热部署实现</font></h2><p>热部署本质上就是把本地的项目打包成war包，然后上传到服务器，最后在Web容器如Tomcat中部署，则相应的部署过程也可分为三步分别是配置本地Maven、配置Linux权限以及配置Tomcat权限。<strong>归根到底，也就是对权限配置</strong>。从本地打包、到传输到远程服务器以及最后远程执行脚本，比如在本文的最后，我们简单实现了一个将本地指定目录中的war包，远程发送到服务器中的Tomcat指定目录中。当然实际情况，需要考虑安全和效率等因素，实现难度要大得多，但本质是一样的。</p>
 <font color="#40a800">配置本地Maven</font>
 
 <p>在setting.xml中<servers>标签中增加账户和相应密码：</servers></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;server&gt;</div><div class="line">	&lt;id&gt;tomcat8&lt;/id&gt;</div><div class="line">	&lt;username&gt;hanchun&lt;/username&gt;</div><div class="line">	&lt;password&gt;123456&lt;/password&gt;</div><div class="line">&lt;/server&gt;</div></pre></td></tr></table></figure>
 <p>在项目pom.xml中增加插件，这里tomcat7-maven-plugin基本可以支持到tomcat8。个人觉得应该很少有公司直接使用这些开源的插件，应该是基于自家安全要求，定制开发相关插件。这部分工作，核心部分不难，可以直接使用tomcat开放出相应的管理接口（用户直接输入192.168.206.129:8080/manager/html能看到其可视化的效果，比如提供该容器目前运行那些项目以及它们的状态，重启指定项目等），或者直接基于shell写脚本，比如文后我们自己简单实现了上传war包的脚本。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;plugin&gt;</div><div class="line">	&lt;groupId&gt;org.apache.tomcat.maven&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;tomcat7-maven-plugin&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;<span class="variable">$&#123;tomcat7-maven-plugin.version&#125;</span>&lt;/version&gt;</div><div class="line">	&lt;configuration&gt;</div><div class="line">		&lt;server&gt;tomcat8&lt;/server&gt;</div><div class="line">        &lt;port&gt;80&lt;/port&gt;</div><div class="line">        &lt;path&gt;/<span class="variable">$&#123;project.artifactId&#125;</span>&lt;/path&gt;</div><div class="line">        &lt;url&gt;http://192.168.206.129:80/manager/text&lt;/url&gt;</div><div class="line">        &lt;username&gt;hanchun&lt;/username&gt;</div><div class="line">        &lt;password&gt;123456&lt;/password&gt;</div><div class="line">	&lt;/configuration&gt;</div><div class="line">&lt;/plugin&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">&lt;plugin&gt;</div><div class="line">	&lt;groupId&gt;org.apache.tomcat.maven&lt;/groupId&gt;</div><div class="line">	&lt;artifactId&gt;tomcat7-maven-plugin&lt;/artifactId&gt;</div><div class="line">	&lt;version&gt;<span class="variable">$&#123;tomcat7-maven-plugin.version&#125;</span>&lt;/version&gt;</div><div class="line">	&lt;configuration&gt;</div><div class="line">		&lt;server&gt;tomcat8&lt;/server&gt;</div><div class="line">        	&lt;port&gt;80&lt;/port&gt;</div><div class="line">       		&lt;path&gt;/<span class="variable">$&#123;project.artifactId&#125;</span>&lt;/path&gt;</div><div class="line">        	&lt;url&gt;http://192.168.206.129:80/manager/text&lt;/url&gt;</div><div class="line">        	&lt;username&gt;hanchun&lt;/username&gt;</div><div class="line">        	&lt;password&gt;123456&lt;/password&gt;</div><div class="line">	&lt;/configuration&gt;</div><div class="line">&lt;/plugin&gt;</div></pre></td></tr></table></figure>
 <font color="#40a800">配置Tomcat</font>
 
 <p>在conf配置目录下tomcat-users.xml中增加以下配置：</p>
@@ -392,26 +391,29 @@
 <font color="#40a800">清理生成的文件</font>
 
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># mvn clean</span></div></pre></td></tr></table></figure>
-<font color="#40a800" 启动、停止和部署web应用<="" font="">
+<font color="#40a800">启动、停止和部署web应用</font>
 
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># mvn tomcat:start</span></div><div class="line"><span class="comment"># mvn tomcat:stop</span></div><div class="line"><span class="comment"># mvn tomcat:deploy</span></div></pre></td></tr></table></figure>
 <font color="#40a800">打印依赖树</font>
 
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># mvn dependency:tree</span></div></pre></td></tr></table></figure>
-<h2 id="一些补充"><a href="#一些补充" class="headerlink" title="一些补充"></a><font color="#fc6423">一些补充</font></h2><p><strong>1.添加ftp账户</strong></p>
+<h2 id="一些补充"><a href="#一些补充" class="headerlink" title="一些补充"></a><font color="#fc6423">一些补充</font></h2><font color="#40a800">添加ftp账户</font>
+
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># /usr/sbin/adduser -d /opt/test_ftp -g ftp -s /sbin/nologin -G root hanchun_ftp</span></div><div class="line"><span class="comment"># passwd hanchun_ftp</span></div><div class="line">Changing password <span class="keyword">for</span> user hanchun_ftp.</div><div class="line">New password: </div><div class="line">Retype new password: </div><div class="line">passwd: all authentication tokens updated successfully.</div></pre></td></tr></table></figure>
 <p>重启ftp</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># /etc/init.d/vsftpd restart</span></div></pre></td></tr></table></figure>
-<p><strong>2.执行过程中一些问题</strong></p>
+<font color="#40a800">执行过程中一些问题</font>
+
 <p>若在脚本运行过程中出现ftp: connect: No route to host 、550 Failed to change directory或cannot create等问题，则需要参照Linux规则配置相应防火墙和sftp账号权限。权限管理是Linux系统的最重要的功能之一，使用得当可以极大提高服务器的安全级别。</p>
-<p><strong>3.服务器防火墙配置</strong></p>
+<font color="#40a800">服务器防火墙配置</font>
+
 <p>实际配置要复杂的多得多，这里只是为了快速验证效果，而直接将防火墙关闭，实际环境中不可如此操作。</p>
 <p>查看防火墙 </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># firewall-cmd -state</span></div></pre></td></tr></table></figure>
 <p>关闭防火墙（重启后失效） </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># systemctl stop firewalld.service</span></div></pre></td></tr></table></figure>
 <p><a href="http://hanchun.tech/" target="_blank" rel="external">欢迎讨论</a></p>
-</font>
+
       
     </div>
 
@@ -434,11 +436,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Linux/" rel="tag"># Linux</a>
-          
             <a href="/tags/Maven/" rel="tag"># Maven</a>
           
             <a href="/tags/Tomcat/" rel="tag"># Tomcat</a>
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
           
             <a href="/tags/Shell/" rel="tag"># Shell</a>
           
