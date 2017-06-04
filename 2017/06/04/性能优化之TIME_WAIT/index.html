@@ -84,19 +84,16 @@
 
 
 
-<meta name="description" content="最近看到一篇介绍性能的文章###
-这篇文章####">
+<meta name="description" content="最近看了几篇关于性能优化的文章，启发很大，其中有个例子是说，为什么TCP标准的header是基于bit描述且只占用20byte，若换成JSON表述会怎样？那么一个syn-ack包header的占用空间会增加10+倍之多，而这对于网络传输来说，就是大小x10+，直接影响对应传输耗时。如果加上数据大于MTU，还会导致分片和重组等问题。即使到了应用层，很多公司内部还嫌弃HTTP协议header效率低，开">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TIME_WAIT状态浅析(上篇)">
-<meta property="og:url" content="http://yoursite.com/2017/06/02/TIME-WAIT状态浅析-上篇/index.html">
+<meta property="og:title" content="性能优化之TIME_WAIT">
+<meta property="og:url" content="http://yoursite.com/2017/06/04/性能优化之TIME_WAIT/index.html">
 <meta property="og:site_name" content="技术博客">
-<meta property="og:description" content="最近看到一篇介绍性能的文章###
-这篇文章####">
-<meta property="og:updated_time" content="2017-06-02T14:25:27.890Z">
+<meta property="og:description" content="最近看了几篇关于性能优化的文章，启发很大，其中有个例子是说，为什么TCP标准的header是基于bit描述且只占用20byte，若换成JSON表述会怎样？那么一个syn-ack包header的占用空间会增加10+倍之多，而这对于网络传输来说，就是大小x10+，直接影响对应传输耗时。如果加上数据大于MTU，还会导致分片和重组等问题。即使到了应用层，很多公司内部还嫌弃HTTP协议header效率低，开">
+<meta property="og:updated_time" content="2017-06-04T10:41:36.004Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="TIME_WAIT状态浅析(上篇)">
-<meta name="twitter:description" content="最近看到一篇介绍性能的文章###
-这篇文章####">
+<meta name="twitter:title" content="性能优化之TIME_WAIT">
+<meta name="twitter:description" content="最近看了几篇关于性能优化的文章，启发很大，其中有个例子是说，为什么TCP标准的header是基于bit描述且只占用20byte，若换成JSON表述会怎样？那么一个syn-ack包header的占用空间会增加10+倍之多，而这对于网络传输来说，就是大小x10+，直接影响对应传输耗时。如果加上数据大于MTU，还会导致分片和重组等问题。即使到了应用层，很多公司内部还嫌弃HTTP协议header效率低，开">
 
 
 
@@ -124,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/06/02/TIME-WAIT状态浅析-上篇/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/06/04/性能优化之TIME_WAIT/"/>
 
 
 
 
 
-  <title> TIME_WAIT状态浅析(上篇) | 技术博客 </title>
+  <title> 性能优化之TIME_WAIT | 技术博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -253,7 +250,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/02/TIME-WAIT状态浅析-上篇/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/04/性能优化之TIME_WAIT/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="韩 春">
@@ -277,7 +274,7 @@
             
             
               
-                TIME_WAIT状态浅析(上篇)
+                性能优化之TIME_WAIT
               
             
           </h1>
@@ -292,8 +289,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-02T23:11:07+08:00">
-                2017-06-02
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-04T23:11:07+08:00">
+                2017-06-04
               </time>
             
 
@@ -315,8 +312,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/网络技术/" itemprop="url" rel="index">
-                    <span itemprop="name">网络技术</span>
+                  <a href="/categories/性能优化/" itemprop="url" rel="index">
+                    <span itemprop="name">性能优化</span>
                   </a>
                 </span>
 
@@ -333,8 +330,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/06/02/TIME-WAIT状态浅析-上篇/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/02/TIME-WAIT状态浅析-上篇/" itemprop="commentCount"></span>
+                <a href="/2017/06/04/性能优化之TIME_WAIT/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/04/性能优化之TIME_WAIT/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -360,8 +357,9 @@
       
 
       
-        <p>最近看到一篇介绍性能的文章###</p>
-<p>这篇文章####<br><a id="more"></a></p>
+        <p>最近看了几篇关于性能优化的文章，启发很大，其中有个例子是说，为什么TCP标准的header是基于bit描述且只占用20byte，若换成JSON表述会怎样？那么一个syn-ack包header的占用空间会增加10+倍之多，而这对于网络传输来说，就是大小x10+，直接影响对应传输耗时。如果加上数据大于MTU，还会导致分片和重组等问题。即使到了应用层，很多公司内部还嫌弃HTTP协议header效率低，开发自己的传输协议呢，比如RPC Dubbo。<br><a id="more"></a></p>
+<p>这让我想起在平时工作时，几乎没有考虑过一些变量的定义差异问题，习惯用int、String、各种Array以及Set，遇到数据接口就是JSON。时间久了会带来一些问题，比如我们会发现项目中出现了臃肿甚至功能类似的接口。我想这些接口设计之初，肯定不是这样。<strong>一定是在项目周期中的一次次需求面前，没把持住，对着接口任性了几把。</strong></p>
+<p>越来越能理解为什么一些底层框架，会在Model上穷尽一些办法让她“优雅”和“复杂”。底层若不注意设计和效率，那么上层就几乎没法用，同理业务逻辑如果不注意设计和效率，一样会存在以上问题。性能优化是一个自底而上的过程，涉及网络、操作系统、编程语言和数据库等多层次，这篇文章，我们从一个配置参数<strong>net.ipv4.tcp_fin_timewait</strong>开始说起。</p>
 <h2 id="还原大量TIME-WAIT场景"><a href="#还原大量TIME-WAIT场景" class="headerlink" title="还原大量TIME_WAIT场景"></a><font color="#fc6423">还原大量TIME_WAIT场景</font></h2><font color="#40a800">####</font>
 
 
@@ -443,8 +441,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/06/02/TIME-WAIT状态浅析-上篇/"
-           data-title="TIME_WAIT状态浅析(上篇)" data-url="http://yoursite.com/2017/06/02/TIME-WAIT状态浅析-上篇/">
+      <div class="ds-thread" data-thread-key="2017/06/04/性能优化之TIME_WAIT/"
+           data-title="性能优化之TIME_WAIT" data-url="http://yoursite.com/2017/06/04/性能优化之TIME_WAIT/">
       </div>
     
   </div>
