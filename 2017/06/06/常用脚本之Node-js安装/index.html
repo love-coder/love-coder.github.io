@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/06/06/常用脚本之Node-js安装/index.html">
 <meta property="og:site_name" content="技术博客">
 <meta property="og:description" content="最近写TCP/IP相关总结时，需要在云上安装Node.js运行环境，模拟服务端。一想到又要下载、编译、安装以及配置环境变量等，内心是极度排斥的。刚好最近也在学习Shell脚本相关知识，所以就愉快地把安装过程用install.sh脚本实现，以便后面再次安装Node.js或类似软件能够效率高些。">
-<meta property="og:updated_time" content="2017-06-07T06:42:23.664Z">
+<meta property="og:updated_time" content="2017-06-07T06:45:27.179Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="常用脚本之Node.js安装">
 <meta name="twitter:description" content="最近写TCP/IP相关总结时，需要在云上安装Node.js运行环境，模拟服务端。一想到又要下载、编译、安装以及配置环境变量等，内心是极度排斥的。刚好最近也在学习Shell脚本相关知识，所以就愉快地把安装过程用install.sh脚本实现，以便后面再次安装Node.js或类似软件能够效率高些。">
@@ -367,7 +367,7 @@
 <p>这种情况下，使用:set ff =unix配置即可。</p>
 <p><strong><font color="#40a800">2.source file.sh、sh file.sh以及./file.sh</font></strong></p>
 <p>这三者在大部分应用场景下功能类似，即执行当前脚本。细微的差别在于./file.sh是因为当前脚本不在环境变量中，而sh file.sh是在当前Shell环境下创建子Shell，在此上面的编辑不会带到原父Shell中，除非使用export到处，而source file.sh能够使改动在当前Shell中立马生效。</p>
-<p><strong><font color="#40a800">3.单引’#’、双引”#”以及倒引<code>#</code></font></strong></p>
+<p><strong><font color="#40a800">3.单引’#’、双引”#”以及倒引`#`</font></strong></p>
 <p>单引中所有字符都会当做普通字符处理，双引中的一些符号会特殊处理如$，而倒引中内容会当作命令行执行。</p>
 <p><a href="http://hanchun.tech/" target="_blank" rel="external">欢迎讨论</a></p>
 
