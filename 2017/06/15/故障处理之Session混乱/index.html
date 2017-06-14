@@ -91,7 +91,7 @@
 <meta property="og:site_name" content="技术博客">
 <meta property="og:description" content="昨天和一位开发某省广电点播系统的朋友聊天，无意中聊到他遇到的一个怪事：系统会极小概率地出现，用户最终充值到其他用户的账户情况，但是系统这几天一直很稳定，所以也没有特别着急。但问题不解决，心里总归不踏实，万一哪天全省做促销活动，出现大规模故障，那就严重了。出于好奇心，我要来了部分相关代码和数据库，寻找到底会是什么原因导致这一奇怪现象。">
 <meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/bug_session/bug_session_db.png">
-<meta property="og:updated_time" content="2017-06-14T14:46:00.023Z">
+<meta property="og:updated_time" content="2017-06-14T14:49:19.474Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="故障处理之Session混乱">
 <meta name="twitter:description" content="昨天和一位开发某省广电点播系统的朋友聊天，无意中聊到他遇到的一个怪事：系统会极小概率地出现，用户最终充值到其他用户的账户情况，但是系统这几天一直很稳定，所以也没有特别着急。但问题不解决，心里总归不踏实，万一哪天全省做促销活动，出现大规模故障，那就严重了。出于好奇心，我要来了部分相关代码和数据库，寻找到底会是什么原因导致这一奇怪现象。">
@@ -367,14 +367,20 @@
 <p>订单状态更新机制是，用户支付成功后，三方支付结构如微信会callback配置的接口，并把商户单号传回来。系统就根据这个商户单号去更新order_type为1，然后再成功提交boss系统后更新为2。</p>
 <h2 id="排错过程"><a href="#排错过程" class="headerlink" title="排错过程"></a><font color="#fc6423">排错过程</font></h2><font color="#40a800">生成订单号的方式问题？</font>
 
+
+
 <font color="#40a800">第三方jar问题？</font>
 
+
 <font color="#40a800">类属性变量问题？</font>
+
 
 <h2 id="一些总结"><a href="#一些总结" class="headerlink" title="一些总结"></a><font color="#fc6423">一些总结</font></h2><p>这个bug感觉非常深刻，虽说并不是什么很难的问题，但是第一次明显意识到基础真的很重要。这次如果不是事先就知道Spring MVC的Controller默认是单例模式，那么这个隐藏的bug就不太容易被找到，另外就是良好的日志记录习惯，对于错误排查重要性不言而喻。</p>
 <font color="#40a800">并发编程</font>
 
+
 <font color="#40a800">代码规范</font>
+
 
 <font color="#40a800">日志记录</font>
 
