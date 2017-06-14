@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Linux,Java,并发," />
+  <meta name="keywords" content="Java,并发,Spring," />
 
 
 
@@ -84,16 +84,18 @@
 
 
 
-<meta name="description" content="@–@">
+<meta name="description" content="昨天和一位开发某省广电点播系统的朋友聊天，无意中聊到他遇到的一个怪事：系统会极小概率地出现，用户最终充值到其他用户的账户情况，但是系统这几天一直很稳定，所以也没有特别着急。但问题不解决，心里总归不踏实，万一哪天全省做促销活动，出现大规模故障，那就严重了。出于好奇心，我要来了部分相关代码和数据库，寻找到底会是什么原因导致这一奇怪现象。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="从一道模拟并发的面试题谈起(上篇)">
-<meta property="og:url" content="http://yoursite.com/2017/06/10/从一道模拟并发的面试题谈起-上篇/index.html">
+<meta property="og:title" content="故障处理之Session混乱">
+<meta property="og:url" content="http://yoursite.com/2017/06/15/故障处理之Session混乱/index.html">
 <meta property="og:site_name" content="技术博客">
-<meta property="og:description" content="@–@">
-<meta property="og:updated_time" content="2017-06-07T15:19:37.589Z">
+<meta property="og:description" content="昨天和一位开发某省广电点播系统的朋友聊天，无意中聊到他遇到的一个怪事：系统会极小概率地出现，用户最终充值到其他用户的账户情况，但是系统这几天一直很稳定，所以也没有特别着急。但问题不解决，心里总归不踏实，万一哪天全省做促销活动，出现大规模故障，那就严重了。出于好奇心，我要来了部分相关代码和数据库，寻找到底会是什么原因导致这一奇怪现象。">
+<meta property="og:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/bug_session/bug_session_db.png">
+<meta property="og:updated_time" content="2017-06-14T14:46:00.023Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="从一道模拟并发的面试题谈起(上篇)">
-<meta name="twitter:description" content="@–@">
+<meta name="twitter:title" content="故障处理之Session混乱">
+<meta name="twitter:description" content="昨天和一位开发某省广电点播系统的朋友聊天，无意中聊到他遇到的一个怪事：系统会极小概率地出现，用户最终充值到其他用户的账户情况，但是系统这几天一直很稳定，所以也没有特别着急。但问题不解决，心里总归不踏实，万一哪天全省做促销活动，出现大规模故障，那就严重了。出于好奇心，我要来了部分相关代码和数据库，寻找到底会是什么原因导致这一奇怪现象。">
+<meta name="twitter:image" content="http://okqqe64zc.bkt.clouddn.com/static/images/bug_session/bug_session_db.png">
 
 
 
@@ -121,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/06/10/从一道模拟并发的面试题谈起-上篇/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/06/15/故障处理之Session混乱/"/>
 
 
 
 
 
-  <title> 从一道模拟并发的面试题谈起(上篇) | 技术博客 </title>
+  <title> 故障处理之Session混乱 | 技术博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -250,7 +252,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/10/从一道模拟并发的面试题谈起-上篇/">
+  <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/15/故障处理之Session混乱/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="韩 春">
@@ -274,7 +276,7 @@
             
             
               
-                从一道模拟并发的面试题谈起(上篇)
+                故障处理之Session混乱
               
             
           </h1>
@@ -289,8 +291,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-10T21:56:33+08:00">
-                2017-06-10
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-15T22:42:58+08:00">
+                2017-06-15
               </time>
             
 
@@ -312,8 +314,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/并发编程/" itemprop="url" rel="index">
-                    <span itemprop="name">并发编程</span>
+                  <a href="/categories/故障处理/" itemprop="url" rel="index">
+                    <span itemprop="name">故障处理</span>
                   </a>
                 </span>
 
@@ -330,8 +332,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/06/10/从一道模拟并发的面试题谈起-上篇/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/10/从一道模拟并发的面试题谈起-上篇/" itemprop="commentCount"></span>
+                <a href="/2017/06/15/故障处理之Session混乱/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/06/15/故障处理之Session混乱/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -357,10 +359,26 @@
       
 
       
-        <p>@–@<br><a id="more"></a></p>
-<h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a><font color="#fc6423">问题背景</font></h2><h2 id="直觉解法"><a href="#直觉解法" class="headerlink" title="直觉解法"></a><font color="#fc6423">直觉解法</font></h2><font color="#40a800">######</font>
+        <p>昨天和一位开发某省广电点播系统的朋友聊天，无意中聊到他遇到的一个怪事：系统会极小概率地出现，用户最终充值到其他用户的账户情况，但是系统这几天一直很稳定，所以也没有特别着急。但问题不解决，心里总归不踏实，万一哪天全省做促销活动，出现大规模故障，那就严重了。出于好奇心，我要来了部分相关代码和数据库，寻找到底会是什么原因导致这一奇怪现象。<br><a id="more"></a></p>
+<h2 id="故障现象"><a href="#故障现象" class="headerlink" title="故障现象"></a><font color="#fc6423">故障现象</font></h2><p>先看数据库订单表中的两条数据（已做脱敏处理），用户B充值了30元，最终却更新了A用户（order_type字段：0创建成功、1支付成功、2提交成功）。实际上其他订单的创建时间间隔更短，只有百毫秒级别。</p>
+<img title="故障现象" alt="故障现象" class="class1 class2" src="http://okqqe64zc.bkt.clouddn.com/static/images/bug_session/bug_session_db.png">
+<p>依据就是微信对账单，B的商户单号是A的订单号，也就是用户B实际支付了A用户订单的300元。所以B就火啦，说好的支付30元，却最终支付300元，然后一看，支付了10倍的价格却没有订阅成功，心疼客服小姐姐30秒（技术上的一个细节带来的问题，却最终由其他人承担，相互理解）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">2017-05-26 19:54:23	`wx<span class="comment">####2c	`12####2401	`0	`	`4002#####8028364	`2017052#####99640517	`opAbKj######GgEEgpM	`JSAPI	`SUCCESS	`PSBC_DEBIT	`CNY	`300.00	`0.00	`充值订单300元	`	`1.80000	`0.60%</span></div></pre></td></tr></table></figure>
+<p>订单状态更新机制是，用户支付成功后，三方支付结构如微信会callback配置的接口，并把商户单号传回来。系统就根据这个商户单号去更新order_type为1，然后再成功提交boss系统后更新为2。</p>
+<h2 id="排错过程"><a href="#排错过程" class="headerlink" title="排错过程"></a><font color="#fc6423">排错过程</font></h2><font color="#40a800">生成订单号的方式问题？</font>
 
-<h2 id="可能会存在的问题"><a href="#可能会存在的问题" class="headerlink" title="可能会存在的问题"></a><font color="#fc6423">可能会存在的问题</font></h2><h2 id="进一步优化思路"><a href="#进一步优化思路" class="headerlink" title="进一步优化思路"></a><font color="#fc6423">进一步优化思路</font></h2><p><a href="http://hanchun.tech/" target="_blank" rel="external">欢迎讨论</a></p>
+<font color="#40a800">第三方jar问题？</font>
+
+<font color="#40a800">类属性变量问题？</font>
+
+<h2 id="一些总结"><a href="#一些总结" class="headerlink" title="一些总结"></a><font color="#fc6423">一些总结</font></h2><p>这个bug感觉非常深刻，虽说并不是什么很难的问题，但是第一次明显意识到基础真的很重要。这次如果不是事先就知道Spring MVC的Controller默认是单例模式，那么这个隐藏的bug就不太容易被找到，另外就是良好的日志记录习惯，对于错误排查重要性不言而喻。</p>
+<font color="#40a800">并发编程</font>
+
+<font color="#40a800">代码规范</font>
+
+<font color="#40a800">日志记录</font>
+
+<p><a href="http://hanchun.tech/" target="_blank" rel="external">欢迎讨论</a></p>
 
       
     </div>
@@ -384,11 +402,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Linux/" rel="tag"># Linux</a>
-          
             <a href="/tags/Java/" rel="tag"># Java</a>
           
             <a href="/tags/并发/" rel="tag"># 并发</a>
+          
+            <a href="/tags/Spring/" rel="tag"># Spring</a>
           
         </div>
       
@@ -397,8 +415,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/06/06/常用脚本之Node-js安装/" rel="next" title="常用脚本之Node.js安装">
-                <i class="fa fa-chevron-left"></i> 常用脚本之Node.js安装
+              <a href="/2017/06/10/从一道模拟并发的面试题谈起-上篇/" rel="next" title="从一道模拟并发的面试题谈起(上篇)">
+                <i class="fa fa-chevron-left"></i> 从一道模拟并发的面试题谈起(上篇)
               </a>
             
           </div>
@@ -406,10 +424,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/06/15/故障处理之Session混乱/" rel="prev" title="故障处理之Session混乱">
-                故障处理之Session混乱 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -435,8 +449,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/06/10/从一道模拟并发的面试题谈起-上篇/"
-           data-title="从一道模拟并发的面试题谈起(上篇)" data-url="http://yoursite.com/2017/06/10/从一道模拟并发的面试题谈起-上篇/">
+      <div class="ds-thread" data-thread-key="2017/06/15/故障处理之Session混乱/"
+           data-title="故障处理之Session混乱" data-url="http://yoursite.com/2017/06/15/故障处理之Session混乱/">
       </div>
     
   </div>
@@ -547,7 +561,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题背景"><span class="nav-number">1.</span> <span class="nav-text">问题背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#直觉解法"><span class="nav-number">2.</span> <span class="nav-text">直觉解法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可能会存在的问题"><span class="nav-number">3.</span> <span class="nav-text">可能会存在的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进一步优化思路"><span class="nav-number">4.</span> <span class="nav-text">进一步优化思路</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#故障现象"><span class="nav-number">1.</span> <span class="nav-text">故障现象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排错过程"><span class="nav-number">2.</span> <span class="nav-text">排错过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些总结"><span class="nav-number">3.</span> <span class="nav-text">一些总结</span></a></li></ol></div>
             
 
           </div>
